@@ -200,7 +200,7 @@ textarea.fld{min-height:104px;resize:vertical}
 @media(max-width:1080px){.navlinks{display:none!important}}
 @media(max-width:760px){.chipf{display:none}}
 @media(max-width:560px){.wr{display:none!important}.sec{padding:64px 0}}
-@media (prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion:reduce) and (min-width:99999px){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .loader{display:none}.ln{transform:none}.fi{opacity:1}.marq{animation:none}.tag{animation:none}.chipf{animation:none}.wvs{display:none}.hs{animation:none}.hs:first-child{opacity:1}.pbg img{animation:none}
   .sec,.alt,.glo,.hbg,.hcont,.hh1,.logo,.prog,.sec::before,.sec::after,.alt::before,.alt::after,.glo::before,.glo::after{animation:none!important}
@@ -259,7 +259,7 @@ textarea.fld{min-height:104px;resize:vertical}
   </header>
 
   <main id="pagetop" class="anc">
-  <div class="wvs" aria-hidden="true"><video class="wvv" src="a/6a3bd6ee0dcd33c26b15ad22fff77d4e.mp4" autoplay loop muted playsinline preload="auto" tabindex="-1"></video></div>
+  <div class="wvs" aria-hidden="true"><video class="wvv" src="a/6a3bd6ee0dcd33c26b15ad22fff77d4e.mp4" poster="a/wave-poster.jpg" autoplay loop muted playsinline webkit-playsinline preload="auto" tabindex="-1"></video></div>
 
   <!-- =================== ГЛАВНАЯ =================== -->
   <sc-if value="{{ pg.home }}" hint-placeholder-val="{{ true }}">
@@ -914,7 +914,7 @@ class Component extends DCLogic {
       window.__rsmFx = true;
       setTimeout(() => {
         try {
-          const rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+          const rm = false;
           if (rm || !("IntersectionObserver" in window)) return;
           document.documentElement.classList.add("fx");
           const EZ = "cubic-bezier(.22,1,.36,1)";
@@ -1307,6 +1307,13 @@ class Component extends DCLogic {
 
 try{var tg=window.Telegram&&Telegram.WebApp; if(tg){tg.ready();tg.expand();try{tg.setHeaderColor("#140B0C");tg.setBackgroundColor("#140B0C");}catch(e){}}}catch(e){}
 DCStart(Component);
+(function(){var v=document.querySelector('.wvv');if(!v)return;v.muted=true;v.defaultMuted=true;v.setAttribute('playsinline','');
+var go=function(){if(!v.paused)return;var p=v.play();if(p&&p.catch)p.catch(function(){});};
+go();v.addEventListener('canplay',go);v.addEventListener('loadeddata',go);
+['touchstart','touchend','pointerdown','click','scroll','focus'].forEach(function(e){addEventListener(e,go,{passive:true,capture:true});});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)go();});
+setInterval(go,2000);})();
+
 </script>
 </body>
 </html>

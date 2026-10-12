@@ -33,6 +33,7 @@
       if(/^on[a-z]+$/.test(n)){ var w=WHOLE.exec(a.value); if(w){ var fn=lookup(scope,w[1]); if(typeof fn==="function") on[n.slice(2)]=fn; } continue; }
       var val=interp(a.value,scope); attrs[n]=val; el.setAttribute(n,val);
     }
+    if(tag==="video"){ el.muted=true; el.defaultMuted=true; }
     el._attrs=attrs; el._on=on;
     for(var k in on) el.addEventListener(k,on[k]);
     var kids=[]; eachChild(node,scope,kids,svg&&tag!=="foreignobject");
