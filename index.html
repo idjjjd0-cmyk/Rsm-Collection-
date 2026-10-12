@@ -385,7 +385,7 @@ const slider = (it) => '<div class="sl" data-sl>' + it.photos.map((p, i) => '<im
 function cardHtml(it) {
   const fav = S.favs.includes(it.id);
   return '<div class="card"><div class="ph" data-open="' + it.id + '">' + slider(it) +
-    (it.sold ? '<span class="badge" style="background:var(--ac)">Продано</span>' : it.badge ? '<span class="badge">' + esc(it.badge) + "</span>" : "") +
+    (it.sold ? '<span class="badge" style="background:var(--ac)">Продано</span>' : isBooked(it) ? '<span class="badge" style="background:#6b5a1a">Бронь</span>' : it.badge ? '<span class="badge">' + esc(it.badge) + "</span>" : "") +
     (it.sold ? "" : '<button class="heart' + (fav ? " on" : "") + '" data-fav="' + it.id + '" aria-label="В избранное">' + I.heart + "</button>") + "</div>" +
     '<div data-open="' + it.id + '"><div class="br">' + esc(it.brand) + '</div><div class="nm">' + esc(it.name) + '</div><div class="cd">Состояние: ' + esc(it.cond) + '</div><div class="pr">' + (it.price == null ? '<span style="color:var(--mu)">По запросу</span>' : fmt(it.price)) + "</div></div></div>";
 }
@@ -450,7 +450,7 @@ V.product = (id) => {
   return '<button class="back" data-back>' + I.back + "Назад</button>" +
     '<div class="gal">' + slider(it) + (it.photos.length > 1 ? '<button class="nav l" data-nav="-1" aria-label="Назад">' + I.back + '</button><button class="nav r" data-nav="1" aria-label="Вперёд">' + I.ar + "</button>" : "") + (it.badge ? '<span class="badge">' + esc(it.badge) + "</span>" : "") + '<button class="heart' + (fav ? " on" : "") + '" data-fav="' + it.id + '">' + I.heart + "</button></div>" +
     '<div class="h1">' + esc(it.brand) + '</div><div class="h2">' + esc(it.name) + '</div><div class="big">' + priceHtml(it) + "</div>" +
-    '<div class="pad">' + (it.sold ? "" : left ? '<div class="box p" style="margin:0 0 10px;border-color:var(--ac)"><div class="eyb">Бронь</div><div style="margin-top:4px">Заявка отправлена. Подтвердит менеджер. Осталось <b>' + fmtLeft(left) + '</b></div></div>' : '<button class="btn" style="margin-bottom:10px;background:linear-gradient(135deg,#C8283A,#8f1b2b)" data-a="book" data-id="' + it.id + '">Забронировать на 24 часа</button>') + '<button class="btn ghost" data-a="photos" data-id="' + it.id + '">Запросить дополнительные фото</button><button class="btn red" style="margin-top:10px" data-a="ask" data-id="' + it.id + '">Задать вопрос менеджеру</button></div>' +
+    '<div class="pad">' + (it.sold ? "" : isBooked(it) ? (S.book[it.id] ? '<div class="box p" style="margin:0 0 10px;border-color:var(--ac)"><div class="eyb">Ваша бронь подтверждена</div><div style="margin-top:4px">Осталось <b>' + fmtLeft(it.booked - Date.now()) + '</b></div></div>' : '<div class="box p" style="margin:0 0 10px"><div class="eyb">Забронировано</div><div style="margin-top:4px">Лот придержан для другого клиента до <b>' + fmtTime(it.booked) + '</b>. Если бронь не состоится, он снова появится в продаже.</div></div>') : left ? '<div class="box p" style="margin:0 0 10px;border-color:var(--ac)"><div class="eyb">Запрос на бронь</div><div style="margin-top:4px">Заявка отправлена, менеджер подтвердит в ближайшее время. Мы напишем вам в Telegram.</div></div>' : '<button class="btn" style="margin-bottom:10px;background:linear-gradient(135deg,#C8283A,#8f1b2b)" data-a="book" data-id="' + it.id + '">Забронировать на 24 часа</button>') + '<button class="btn ghost" data-a="photos" data-id="' + it.id + '">Запросить дополнительные фото</button><button class="btn red" style="margin-top:10px" data-a="ask" data-id="' + it.id + '">Задать вопрос менеджеру</button></div>' +
     '<div class="box">' + [["Бренд", it.brand], ["Категория", it.cat], ["Размер", it.size], ["Артикул", art(it)]].map((r) => '<div class="row"><span>' + r[0] + "</span><span>" + esc(r[1]) + "</span></div>").join("") + "</div>" +
     '' + sizeBox(it) + '<div class="box p"><div class="eyb">Состояние</div><div style="font:600 18px Inter;margin:4px 0">' + esc(it.cond) + '</div><div style="color:var(--mu)">Возможны небольшие следы использования. Пришлём живые фото и видео по запросу.</div></div>' +
     '<div class="box p"><div class="eyb">Гарантия</div><div style="margin-top:6px">Каждый лот проходит двухэтапную экспертизу подлинности. Если подлинность не подтвердится, вернём 100% стоимости.</div></div>' +
@@ -497,6 +497,8 @@ function save() {
   store.set("rsm_favs", S.favs); store.set("rsm_cart", S.cart); store.set("rsm_book", S.book);
   try { tg && tg.CloudStorage && tg.CloudStorage.setItem("rsm", JSON.stringify({ f: S.favs, c: S.cart, b: S.book })); } catch (e) {}
 }
+const isBooked = (it) => !it.sold && it.booked && it.booked > Date.now();
+const fmtTime = (t) => new Date(t).toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }) + " МСК";
 const bookLeft = (id) => { const t = S.book[id]; if (!t) return 0; return Math.max(0, t + 864e5 - Date.now()); };
 const fmtLeft = (ms) => Math.floor(ms / 36e5) + " ч " + String(Math.floor(ms % 36e5 / 6e4)).padStart(2, "0") + " мин";
 function toast(t) { const e = document.createElement("div"); e.className = "toast"; e.textContent = t; document.body.appendChild(e); setTimeout(() => e.remove(), 1800); }
@@ -543,7 +545,17 @@ document.addEventListener("click", (e) => {
   else if (d.a === "manager") msgManager("Здравствуйте! Хочу задать вопрос.");
   else if (d.a === "channel") openTg(CHANNEL);
   else if (d.a === "photos") { const it = byId(d.id); msgManager("Здравствуйте! Пришлите, пожалуйста, дополнительные фото и видео: " + it.brand + " " + it.name + " (" + art(it) + ")"); }
-  else if (d.a === "book") { const it = byId(d.id); buzz("medium"); S.book[it.id] = Date.now(); save(); msgManager("Здравствуйте! Хочу забронировать на 24 часа: " + it.brand + " " + it.name + " (" + art(it) + ")"); render(true); }
+  else if (d.a === "book") {
+    const it = byId(d.id); buzz("medium");
+    const fallback = () => { S.book[it.id] = Date.now(); save(); msgManager("Здравствуйте! Хочу забронировать на 24 часа: " + it.brand + " " + it.name + " (" + art(it) + ")"); render(true); };
+    if (!(tg && tg.initData)) return fallback();
+    fetch(API + "/api/book", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ initData: tg.initData, id: it.id }) })
+      .then((r) => r.json()).then((r) => {
+        if (r && r.ok) { S.book[it.id] = Date.now(); save(); render(true); try { tg.HapticFeedback.notificationOccurred("success"); } catch (e) {} }
+        else if (r && r.reason === "booked") { try { tg.showAlert("Этот лот уже забронирован другим клиентом."); } catch (e) {} loadCat(); }
+        else fallback();
+      }).catch(fallback);
+  }
   else if (d.a === "ask") { const it = byId(d.id); msgManager("Здравствуйте! Вопрос по лоту: " + it.brand + " " + it.name + " (" + art(it) + ")"); }
   else if (d.a === "cart") { const id = +d.id; buzz("medium"); if (S.cart.includes(id)) { push("cart"); return; } S.cart.push(id); save(); toast("Добавлено в корзину"); render(true); }
   else if (d.a === "order") { const l = S.cart.map(byId).filter(Boolean); msgManager("Здравствуйте! Хочу оформить заказ:\n\n" + l.map((i, n) => (n + 1) + ". " + i.brand + " " + i.name + " (" + art(i) + "), " + fmt(i.price)).join("\n")); }
@@ -556,7 +568,7 @@ document.addEventListener("scroll", (e) => {
 }, true);
 
 /* ---------- живой каталог (бот) ---------- */
-const CAT_API = "https://rsm-bot.idjjjd0.workers.dev/api/catalog";
+const API = "https://rsm-bot.idjjjd0.workers.dev", CAT_API = API + "/api/catalog";
 function applyCat(list) {
   if (!Array.isArray(list) || !list.length) return false;
   ALL.splice(0, ALL.length, ...list);
@@ -564,12 +576,21 @@ function applyCat(list) {
   S.stack = S.stack.filter((e) => e.v !== "product" || byId(e.id));
   return true;
 }
+let deepDone = false;
+function openDeep() {
+  if (deepDone) return;
+  try {
+    const qp = new URLSearchParams(location.search), id = +(qp.get("item") || 0);
+    if (id && byId(id)) { deepDone = true; S.tab = "catalog"; push("product", id); }
+  } catch (e) {}
+}
 function loadCat() {
   try {
     const ac = new AbortController(), t = setTimeout(() => ac.abort(), 7000);
     fetch(CAT_API, { signal: ac.signal }).then((r) => r.json()).then((l) => {
       clearTimeout(t);
       if (applyCat(l)) { store.set("rsm_cat", l); render(true); }
+      openDeep();
     }).catch(() => {});
   } catch (e) {}
 }
@@ -591,6 +612,7 @@ function loadCat() {
   } catch (e) {}
   try { applyCat(store.get("rsm_cat", null)); } catch (e) {}
   render();
+  openDeep();
   loadCat();
   try {
     if (tg && tg.CloudStorage) tg.CloudStorage.getItem("rsm", (err, v) => {
