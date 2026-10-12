@@ -27,6 +27,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .hs img{width:100%;height:100%;object-fit:cover;display:block}
 .hs .hbg{position:absolute;left:-6%;top:-6%;width:112%;height:112%;filter:blur(36px) brightness(.5) saturate(1.1)}
 .hs .hm{position:relative;object-fit:contain}
+.hs .hw{display:none}
+@media(min-width:900px){.hs .hw{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hs .hm,.hs .hbg{display:none}}
 @keyframes hsl{0%{opacity:0;transform:scale(1.04)}2.1%{opacity:1}8.33%{opacity:1}10.4%{opacity:0;transform:scale(1.13)}100%{opacity:0;transform:scale(1.13)}}
 .pbg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .pbg img{width:100%;height:100%;object-fit:cover;display:block;animation:pz 26s ease-out both}
@@ -37,8 +39,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 @media(max-width:860px){.ph.pf{padding:72px 0 80px}}
 
 @keyframes loaderOut{to{opacity:0;visibility:hidden}}
-@keyframes loaderTxt{to{opacity:0;filter:blur(8px);transform:scale(1.06)}}
-.loader{position:fixed;inset:0;z-index:200;background:radial-gradient(ellipse at 50% 45%,#5A0C1A 0%,#3A0711 48%,#1F040A 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;animation:loaderOut 1.1s ease-in-out 2.2s forwards}
+@keyframes loaderTxt{to{opacity:0;transform:scale(1.04)}}
+.loader{will-change:opacity;backface-visibility:hidden;position:fixed;inset:0;z-index:200;background:radial-gradient(ellipse at 50% 45%,#5A0C1A 0%,#3A0711 48%,#1F040A 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;animation:loaderOut 1.1s ease-in-out 2.2s forwards}
 .loader>div{animation:loaderTxt .9s ease-in 2.05s forwards}
 .loader>div.fi{animation:fadeIn 1s ease forwards,loaderTxt .9s ease-in 2.05s forwards}
 .loader span{display:inline-block;overflow:hidden}
@@ -210,13 +212,7 @@ textarea.fld{min-height:104px;resize:vertical}
 <style>html,body{background:#140B0C}</style>
 </head>
 <body>
-<div id="app"></div>
-<template id="tpl">
-
-
-<div style="background:#140B0C;color:#F4EAE7;font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;overflow-x:clip">
-
-  <!-- заставка -->
+<!-- заставка -->
   <div class="loader" aria-hidden="true">
     <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(48px,11vw,120px);letter-spacing:.06em;color:#F4EAE7;line-height:1">
       <span><i style="animation-delay:0s">R</i></span><span><i style="animation-delay:.08s">s</i></span><span><i style="animation-delay:.16s">m</i></span>
@@ -224,6 +220,12 @@ textarea.fld{min-height:104px;resize:vertical}
     <div class="fi" style="font-family:'JetBrains Mono',monospace;font-size:clamp(11px,1.6vw,15px);letter-spacing:.5em;text-transform:uppercase;color:rgba(255,111,123,.8);animation-delay:.5s,2.05s">Collection</div>
     <div class="fi" style="margin-top:14px;font-family:'Inter',sans-serif;font-size:clamp(12px,1.7vw,16px);letter-spacing:.22em;text-transform:uppercase;color:rgba(244,234,231,.55);text-align:center;padding:0 20px;animation-delay:.95s,2.05s">Ресейл-платформа · Онлайн-бутик</div>
   </div>
+
+  <div id="app"></div>
+<template id="tpl">
+
+
+<div style="background:#140B0C;color:#F4EAE7;font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;overflow-x:clip">
 
   <!-- шапка и меню -->
   <header style="position:sticky;top:0;z-index:20;height:0;background:transparent"><div class="prog" aria-hidden="true"></div>
@@ -266,7 +268,7 @@ textarea.fld{min-height:104px;resize:vertical}
   <div class="pg">
     <section style="position:relative;background:#4A0B15;color:#F4EAE7;overflow:hidden">
       <div class="hbg" aria-hidden="true">
-        <div class="hs" style="animation-delay:0s"><img class="hbg" src="a/5fa1a618c8c386b78289a1b092a5faea.jpg" alt=""><img class="hm" src="a/5fa1a618c8c386b78289a1b092a5faea.jpg" alt="" style="object-position:62% 50%"></div>
+        <div class="hs" style="animation-delay:0s"><img class="hbg" src="a/5fa1a618c8c386b78289a1b092a5faea.jpg" alt=""><img class="hm" src="a/5fa1a618c8c386b78289a1b092a5faea.jpg" alt="" style="object-position:62% 50%"><img class="hw" src="a/h1wide.jpg" alt="" style="object-position:62% 30%"></div>
         <div class="hs" style="animation-delay:8s"><img src="a/27d4a027e7e6ce538ad5e7d0905ec1f5.jpg" alt="" style="object-position:50% 28%"></div>
         <div class="hs" style="animation-delay:16s"><img src="a/492cc39470db4a6413b4e9f3bccf6976.jpg" alt="" style="object-position:50% 40%"></div>
         <div class="hs" style="animation-delay:24s"><img src="a/2b57ff62c27ec174b610507e77f0aa0e.jpg" alt="" style="object-position:50% 58%"></div>
@@ -1306,13 +1308,13 @@ class Component extends DCLogic {
 }
 
 try{var tg=window.Telegram&&Telegram.WebApp; if(tg){tg.ready();tg.expand();try{tg.setHeaderColor("#140B0C");tg.setBackgroundColor("#140B0C");}catch(e){}}}catch(e){}
-DCStart(Component);
-(function(){var v=document.querySelector('.wvv');if(!v)return;v.muted=true;v.defaultMuted=true;v.setAttribute('playsinline','');
+requestAnimationFrame(function(){setTimeout(function(){DCStart(Component);initVideo();},120);});
+function initVideo(){var v=document.querySelector('.wvv');if(!v)return;v.muted=true;v.defaultMuted=true;v.setAttribute('playsinline','');
 var go=function(){if(!v.paused)return;var p=v.play();if(p&&p.catch)p.catch(function(){});};
 go();v.addEventListener('canplay',go);v.addEventListener('loadeddata',go);
 ['touchstart','touchend','pointerdown','click','scroll','focus'].forEach(function(e){addEventListener(e,go,{passive:true,capture:true});});
 document.addEventListener('visibilitychange',function(){if(!document.hidden)go();});
-setInterval(go,2000);})();
+setInterval(go,2000);}
 
 </script>
 </body>
