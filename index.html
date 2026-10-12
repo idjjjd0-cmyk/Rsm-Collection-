@@ -344,7 +344,7 @@ const I = {
 
 const S = {
   tab: "catalog", stack: [], sec: null, brand: "", price: "", sort: "new", q: "",
-  favs: store.get("rsm_favs", []), cart: store.get("rsm_cart", []), book: store.get("rsm_book", {}), ref: "phone", hint: !store.get("rsm_hint", false), faq: -1
+  favs: store.get("rsm_favs", []), cart: store.get("rsm_cart", []), book: store.get("rsm_book", {}), watch: store.get("rsm_watch", []), ref: "phone", hint: !store.get("rsm_hint", false), faq: -1
 };
 const PRICES = [["", "Любая"], ["a", "до 50 тыс"], ["b", "50–150 тыс"], ["c", "от 150 тыс"]];
 const SORTS = [["new", "Сначала новинки"], ["asc", "Цена: по возрастанию"], ["desc", "Цена: по убыванию"]];
@@ -417,7 +417,7 @@ V.catalog = () => {
   return '<div class="top"><div class="logo">RSM <b>Collection</b></div><div class="cnt">' + list.length + " " + plural(list.length, "товар", "товара", "товаров") + "</div>" + cartBtn() + "</div>" +
     '<div class="chips main">' + (SOLD.length ? '<button class="chip" data-go="sold" style="flex:0 0 auto;padding:11px 14px">Продано</button>' : "") + main.map((m) => '<button class="chip' + (S.sec === m[0] || (m[0] === "brands" && S.brand) || (m[0] === "filters" && S.price) ? " on" : "") + '" data-sec="' + m[0] + '">' + m[1] + "</button>").join("") + "</div>" + sub +
     (S.hint && tg && tg.addToHomeScreen ? '<div class="banner"><div class="ic">RSM</div><div class="t"><b>RSM на экран «Домой»</b><span>Открывайте каталог в один тап</span></div><button class="btn sm" data-a="home">Добавить</button><button class="x" data-a="hint">×</button></div>' : "") +
-    (list.length ? '<div class="grid">' + list.map(cardHtml).join("") + "</div>" : '<div class="empty"><b>Ничего не найдено</b>Попробуйте изменить фильтры</div>') +
+    (list.length ? '<div class="grid">' + list.map(cardHtml).join("") + "</div>" : (ITEMS.length ? '<div class="empty"><b>Ничего не найдено</b>Попробуйте изменить фильтры</div>' : '<div class="empty"><b>Каталог пополняется</b>Новые поступления скоро появятся здесь</div>')) +
     '<div class="pad" style="margin-top:8px"><button class="btn ghost" data-a="concierge">Не нашли нужную модель? Подберём под запрос</button></div>';
 };
 V.sold = () => '<button class="back" data-back>' + I.back + 'Назад</button><div class="h1" style="margin-top:6px">Продано</div><div class="pad" style="color:var(--mu);margin-top:6px">Уже нашли своих владельцев: ' + SOLD.length + " " + plural(SOLD.length, "лот", "лота", "лотов") + '. Такую же найдём под ваш запрос.</div><div class="grid sold">' + SOLD.map(cardHtml).join("") + "</div>";
@@ -444,16 +444,28 @@ const resHtml = () => {
   const l = q ? ITEMS.filter((i) => (i.brand + " " + i.name).toLowerCase().includes(q)) : ITEMS;
   return l.length ? '<div class="grid">' + l.map(cardHtml).join("") + "</div>" : '<div class="empty"><b>Не нашли</b>Напишите нам, подберём под запрос</div>';
 };
+V.compare = (id) => {
+  const [a, b] = String(id).split(":").map(byId), back = '<button class="back" data-back>' + I.back + "Назад</button>";
+  if (!a || !b) return back + '<div class="empty"><b>Лот недоступен</b>Вернитесь в каталог</div>';
+  const vol = (it) => { const d = dims(it); return d.w && d.h && d.d ? Math.round(d.w * d.h * d.d / 100) / 10 : null; };
+  const row = (l, x, y, cls) => '<div style="display:grid;grid-template-columns:86px 1fr 1fr;gap:8px;padding:11px 0;border-top:1px solid var(--line);align-items:center"><span style="color:var(--mu);font-size:13px">' + l + '</span><span style="font-weight:' + (cls === 0 ? 600 : 500) + ';color:' + (cls === 0 ? "#6fd08c" : "inherit") + '">' + x + '</span><span style="font-weight:' + (cls === 1 ? 600 : 500) + ';color:' + (cls === 1 ? "#6fd08c" : "inherit") + '">' + y + "</span></div>";
+  const lo = a.price != null && b.price != null && a.price !== b.price ? (a.price < b.price ? 0 : 1) : -1;
+  const va = vol(a), vb = vol(b), vbig = va && vb && va !== vb ? (va > vb ? 0 : 1) : -1;
+  const diff = a.price != null && b.price != null && a.price !== b.price ? '<div class="pad" style="margin-top:12px;color:var(--mu)">Разница в цене: <b style="color:var(--tx)">' + fmt(Math.abs(a.price - b.price)) + "</b></div>" : "";
+  return back + '<div class="h1" style="margin-top:6px">Сравнение</div><div class="grid" style="grid-template-columns:repeat(2,1fr)">' + cardHtml(a) + cardHtml(b) + "</div>" + diff +
+    '<div class="box p" style="margin-top:12px">' + row("Цена", priceHtml(a), priceHtml(b), lo) + row("Бренд", esc(a.brand), esc(b.brand), -1) + row("Состояние", esc(a.cond), esc(b.cond), -1) + row("Размер", esc(a.size || "—"), esc(b.size || "—"), -1) + (va && vb ? row("Объём, л", String(va), String(vb), vbig) : "") + "</div>";
+};
 V.product = (id) => {
   const it = byId(id), fav = S.favs.includes(it.id), inCart = S.cart.includes(it.id), left = bookLeft(it.id);
   const sim = (it.sold ? ITEMS : ITEMS.filter((i) => i.id !== it.id)).sort((a, b) => (b.brand === it.brand) - (a.brand === it.brand)).slice(0, 6);
   return '<button class="back" data-back>' + I.back + "Назад</button>" +
     '<div class="gal">' + slider(it) + (it.photos.length > 1 ? '<button class="nav l" data-nav="-1" aria-label="Назад">' + I.back + '</button><button class="nav r" data-nav="1" aria-label="Вперёд">' + I.ar + "</button>" : "") + (it.badge ? '<span class="badge">' + esc(it.badge) + "</span>" : "") + '<button class="heart' + (fav ? " on" : "") + '" data-fav="' + it.id + '">' + I.heart + "</button></div>" +
     '<div class="h1">' + esc(it.brand) + '</div><div class="h2">' + esc(it.name) + '</div><div class="big">' + priceHtml(it) + "</div>" +
-    '<div class="pad">' + (it.sold ? "" : isBooked(it) ? (S.book[it.id] ? '<div class="box p" style="margin:0 0 10px;border-color:var(--ac)"><div class="eyb">Ваша бронь подтверждена</div><div style="margin-top:4px">Осталось <b>' + fmtLeft(it.booked - Date.now()) + '</b></div></div>' : '<div class="box p" style="margin:0 0 10px"><div class="eyb">Забронировано</div><div style="margin-top:4px">Лот придержан для другого клиента до <b>' + fmtTime(it.booked) + '</b>. Если бронь не состоится, он снова появится в продаже.</div></div>') : left ? '<div class="box p" style="margin:0 0 10px;border-color:var(--ac)"><div class="eyb">Запрос на бронь</div><div style="margin-top:4px">Заявка отправлена, менеджер подтвердит в ближайшее время. Мы напишем вам в Telegram.</div></div>' : '<button class="btn" style="margin-bottom:10px;background:linear-gradient(135deg,#C8283A,#8f1b2b)" data-a="book" data-id="' + it.id + '">Забронировать на 24 часа</button>') + '<button class="btn ghost" data-a="photos" data-id="' + it.id + '">Запросить дополнительные фото</button><button class="btn red" style="margin-top:10px" data-a="ask" data-id="' + it.id + '">Задать вопрос менеджеру</button></div>' +
+    '<div class="pad">' + (it.sold ? "" : isBooked(it) ? (S.book[it.id] ? '<div class="box p" style="margin:0 0 10px;border-color:var(--ac)"><div class="eyb">Ваша бронь подтверждена</div><div style="margin-top:4px">Осталось <b>' + fmtLeft(it.booked - Date.now()) + '</b></div></div>' : '<div class="box p" style="margin:0 0 10px"><div class="eyb">Забронировано</div><div style="margin-top:4px">Лот придержан для другого клиента до <b>' + fmtTime(it.booked) + '</b>. Если бронь не состоится, он снова появится в продаже.</div></div>') : left ? '<div class="box p" style="margin:0 0 10px;border-color:var(--ac)"><div class="eyb">Запрос на бронь</div><div style="margin-top:4px">Заявка отправлена, менеджер подтвердит в ближайшее время. Мы напишем вам в Telegram.</div></div>' : '<button class="btn" style="margin-bottom:10px;background:linear-gradient(135deg,#C8283A,#8f1b2b)" data-a="book" data-id="' + it.id + '">Забронировать на 24 часа</button>') + watchHtml(it) + '<button class="btn ghost" data-a="photos" data-id="' + it.id + '">Запросить дополнительные фото</button><button class="btn red" style="margin-top:10px" data-a="ask" data-id="' + it.id + '">Задать вопрос менеджеру</button></div>' +
     '<div class="box">' + [["Бренд", it.brand], ["Категория", it.cat], ["Размер", it.size], ["Артикул", art(it)]].map((r) => '<div class="row"><span>' + r[0] + "</span><span>" + esc(r[1]) + "</span></div>").join("") + "</div>" +
     '' + sizeBox(it) + '<div class="box p"><div class="eyb">Состояние</div><div style="font:600 18px Inter;margin:4px 0">' + esc(it.cond) + '</div><div style="color:var(--mu)">Возможны небольшие следы использования. Пришлём живые фото и видео по запросу.</div></div>' +
     '<div class="box p"><div class="eyb">Гарантия</div><div style="margin-top:6px">Каждый лот проходит двухэтапную экспертизу подлинности. Если подлинность не подтвердится, вернём 100% стоимости.</div></div>' +
+    (!it.sold && sim.length ? '<div class="sec">Сравнить с другим лотом</div><div class="chips">' + sim.slice(0, 5).map((o) => '<button class="chip" data-cmp="' + it.id + ":" + o.id + '">' + esc(o.name.split(",")[0]) + " · " + (o.price == null ? "по запросу" : fmt(o.price)) + "</button>").join("") + "</div>" : "") +
     (sim.length ? '<div class="sec">Похожие товары</div><div class="hs">' + sim.map(cardHtml).join("") + "</div>" : "") +
     (it.sold ? '<div class="fix"><button class="btn" data-a="concierge">Найти такую же сумку</button></div>' : '<div class="fix"><button class="btn" data-a="cart" data-id="' + it.id + '">' + (inCart ? "Перейти в корзину" : "В корзину") + "</button></div>");
 };
@@ -497,6 +509,12 @@ function save() {
   store.set("rsm_favs", S.favs); store.set("rsm_cart", S.cart); store.set("rsm_book", S.book);
   try { tg && tg.CloudStorage && tg.CloudStorage.setItem("rsm", JSON.stringify({ f: S.favs, c: S.cart, b: S.book })); } catch (e) {}
 }
+const watchHtml = (it) => {
+  if (it.sold || !(tg && tg.initData)) return "";
+  const bk = isBooked(it);
+  if (S.watch.includes(it.id)) return '<div class="box p" style="margin:0 0 10px"><div class="eyb">Вы следите</div><div style="margin-top:4px">Напишем в Telegram, когда ' + (bk ? "лот освободится" : "цена снизится") + ".</div></div>";
+  return '<button class="btn ghost" style="margin-bottom:10px" data-a="watch" data-id="' + it.id + '">' + (bk ? "Сообщить, если освободится" : "Сообщить о снижении цены") + "</button>";
+};
 const isBooked = (it) => !it.sold && it.booked && it.booked > Date.now();
 const fmtTime = (t) => new Date(t).toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }) + " МСК";
 const bookLeft = (id) => { const t = S.book[id]; if (!t) return 0; return Math.max(0, t + 864e5 - Date.now()); };
@@ -521,7 +539,7 @@ function sheet(key) {
 }
 
 document.addEventListener("click", (e) => {
-  const t = e.target.closest("[data-tab],[data-go],[data-open],[data-fav],[data-set],[data-sec],[data-a],[data-form],[data-back],[data-rm],[data-faq],[data-q],[data-ext],[data-ref],[data-nav],[data-srch]");
+  const t = e.target.closest("[data-tab],[data-go],[data-open],[data-cmp],[data-fav],[data-set],[data-sec],[data-a],[data-form],[data-back],[data-rm],[data-faq],[data-q],[data-ext],[data-ref],[data-nav],[data-srch]");
   if (!t) return;
   const d = t.dataset;
   if (d.fav) { e.stopPropagation(); const id = +d.fav; S.favs = S.favs.includes(id) ? S.favs.filter((x) => x !== id) : S.favs.concat(id); save(); buzz(); t.classList.toggle("on", S.favs.includes(id)); if (cur().v === "fav") render(true); return; }
@@ -529,6 +547,7 @@ document.addEventListener("click", (e) => {
   if (d.srch !== undefined) { buzz(); S.stack = []; S.tab = "search"; render(); setTimeout(() => $("#q") && $("#q").focus(), 50); return; }
   if (d.back !== undefined) { back(); return; }
   if (d.open) { buzz(); push("product", +d.open); return; }
+  if (d.cmp) { buzz(); push("compare", d.cmp); return; }
   if (d.go) { buzz(); push(d.go); return; }
   if (d.sec) { S.sec = S.sec === d.sec ? null : d.sec; render(true); return; }
   if (d.set) { const k = d.set; S[k] = k === "sort" ? d.v : (S[k] === d.v ? "" : d.v); buzz(); render(true); return; }
@@ -556,6 +575,11 @@ document.addEventListener("click", (e) => {
         else fallback();
       }).catch(fallback);
   }
+  else if (d.a === "watch") {
+    const it = byId(d.id); buzz("light");
+    fetch(API + "/api/watch", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ initData: tg.initData, id: it.id }) })
+      .then((r) => r.json()).then((r) => { if (r && r.ok) { S.watch.push(it.id); store.set("rsm_watch", S.watch); render(true); } }).catch(() => {});
+  }
   else if (d.a === "ask") { const it = byId(d.id); msgManager("Здравствуйте! Вопрос по лоту: " + it.brand + " " + it.name + " (" + art(it) + ")"); }
   else if (d.a === "cart") { const id = +d.id; buzz("medium"); if (S.cart.includes(id)) { push("cart"); return; } S.cart.push(id); save(); toast("Добавлено в корзину"); render(true); }
   else if (d.a === "order") { const l = S.cart.map(byId).filter(Boolean); msgManager("Здравствуйте! Хочу оформить заказ:\n\n" + l.map((i, n) => (n + 1) + ". " + i.brand + " " + i.name + " (" + art(i) + "), " + fmt(i.price)).join("\n")); }
@@ -570,10 +594,10 @@ document.addEventListener("scroll", (e) => {
 /* ---------- живой каталог (бот) ---------- */
 const API = "https://rsm-bot.idjjjd0.workers.dev", CAT_API = API + "/api/catalog";
 function applyCat(list) {
-  if (!Array.isArray(list) || !list.length) return false;
+  if (!Array.isArray(list)) return false;
   ALL.splice(0, ALL.length, ...list);
   ITEMS = ALL.filter((i) => !i.sold); SOLD = ALL.filter((i) => i.sold);
-  S.stack = S.stack.filter((e) => e.v !== "product" || byId(e.id));
+  S.stack = S.stack.filter((e) => (e.v !== "product" || byId(e.id)) && (e.v !== "compare" || String(e.id).split(":").every(byId)));
   return true;
 }
 let deepDone = false;
