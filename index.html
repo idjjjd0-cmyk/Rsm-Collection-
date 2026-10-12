@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#140B0C">
+<title>Rsm Collection — люксовые сумки</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ease:cubic-bezier(.22,1,.36,1);--disp:'Unbounded',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{margin:0;background:#140B0C}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid #FF6F7B;outline-offset:3px}
+
+/* ---------- заставка ---------- */
+@keyframes lup{to{transform:translateY(0)}}
+.hbg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:#140B0C}
+.hbg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,6,7,.82) 0%,rgba(12,6,7,.5) 45%,rgba(12,6,7,.08) 100%),linear-gradient(180deg,rgba(12,6,7,.12) 0%,rgba(12,6,7,0) 45%,rgba(12,6,7,.7) 100%)}
+.hs{position:absolute;inset:0;opacity:0;animation:hsl 96s ease-in-out infinite both}
+.hs img{width:100%;height:100%;object-fit:cover;display:block}
+.hs .hbg{position:absolute;left:-6%;top:-6%;width:112%;height:112%;filter:blur(36px) brightness(.5) saturate(1.1)}
+.hs .hm{position:relative;object-fit:contain}
+@keyframes hsl{0%{opacity:0;transform:scale(1.04)}2.1%{opacity:1}8.33%{opacity:1}10.4%{opacity:0;transform:scale(1.13)}100%{opacity:0;transform:scale(1.13)}}
+.pbg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.pbg img{width:100%;height:100%;object-fit:cover;display:block;animation:pz 26s ease-out both}
+.pbg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(74,11,21,.95) 0%,rgba(74,11,21,.7) 50%,rgba(74,11,21,.4) 100%),linear-gradient(180deg,rgba(74,11,21,.15),rgba(74,11,21,.6))}
+@keyframes pz{from{transform:scale(1.14)}to{transform:scale(1.02)}}
+.ph.pf{padding:96px 0 104px;min-height:440px;display:flex;align-items:center}
+.ph.pf>.wrap{width:100%}
+@media(max-width:860px){.ph.pf{padding:72px 0 80px}}
+
+@keyframes loaderOut{to{opacity:0;visibility:hidden}}
+@keyframes loaderTxt{to{opacity:0;filter:blur(8px);transform:scale(1.06)}}
+.loader{position:fixed;inset:0;z-index:200;background:radial-gradient(ellipse at 50% 45%,#5A0C1A 0%,#3A0711 48%,#1F040A 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;animation:loaderOut 1.1s ease-in-out 2.2s forwards}
+.loader>div{animation:loaderTxt .9s ease-in 2.05s forwards}
+.loader>div.fi{animation:fadeIn 1s ease forwards,loaderTxt .9s ease-in 2.05s forwards}
+.loader span{display:inline-block;overflow:hidden}
+.loader span i{display:inline-block;font-style:normal;transform:translateY(110%);animation:lup .8s var(--ease) forwards}
+
+/* ---------- анимации ---------- */
+@keyframes fadeIn{to{opacity:1}}
+@keyframes swing{0%,100%{transform:rotate(5deg)}50%{transform:rotate(-5deg)}}
+@keyframes marq{to{transform:translateX(-50%)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%{transform:scale(.96);opacity:1}100%{transform:scale(1.18);opacity:0}}
+@keyframes drip{to{top:100%}}
+@keyframes pageIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes reveal{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:140}to{stroke-dashoffset:0}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.pg{animation:pageIn .85s var(--ease) both}
+.ln{display:block;transform:translateY(115%);animation:lup 1.1s var(--ease) forwards}
+.fi{opacity:0;animation:fadeIn 1s ease forwards}
+.tag{transform-origin:50% 0;animation:swing 6.5s ease-in-out infinite}
+.tag:hover{animation-play-state:paused}
+.marq{display:inline-flex;animation:marq 45s linear infinite}
+.marqwrap:hover .marq{animation-play-state:paused}
+.chipf{position:absolute;z-index:3;cursor:default;scale:1;transition:scale .55s var(--ease),background .4s,border-color .4s,box-shadow .5s var(--ease);display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border:1px solid rgba(244,234,231,.22);border-radius:999px;background:rgba(244,234,231,.06);backdrop-filter:blur(6px);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:rgba(244,234,231,.9);animation:bob 5.5s ease-in-out infinite;animation-delay:var(--bd,0s)}
+.hcont .btn,.tag,.chipf,.navlinks .nl{transition:scale .8s var(--ease),color .4s,opacity .25s,background .4s,border-color .4s,box-shadow .5s var(--ease)}
+.hcont .btn:hover{scale:1.1}
+.tag:hover{scale:1.12}
+.chipf:hover{scale:1.28}
+.navlinks .nl:hover{scale:1.18}
+.chipf b{width:5px;height:5px;border-radius:50%;background:#FF6F7B;display:block;transition:transform .5s var(--ease),box-shadow .5s}
+.chipf:hover{z-index:4;background:rgba(200,40,58,.35);border-color:rgba(255,111,123,.7);box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.chipf:hover b{transform:scale(1.3);box-shadow:0 0 8px #FF6F7B}
+.ring{position:absolute;border-radius:50%;pointer-events:none}
+.ring1{width:min(62vw,820px);aspect-ratio:1;right:-14%;top:-22%;border:1px dashed rgba(244,234,231,.1);animation:spin 80s linear infinite}
+.ring2{width:min(40vw,520px);aspect-ratio:1;left:-8%;bottom:-24%;border:1px solid rgba(244,234,231,.07)}
+.drip{position:absolute;left:0;top:-100%;width:1px;height:100%;background:#FF6F7B;animation:drip 2s var(--ease) infinite}
+@keyframes reveal2{from{opacity:0;transform:translateY(46px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes gdrift{from{transform:translateY(-120px)}to{transform:translateY(120px)}}
+@keyframes gdrift2{from{transform:translateY(100px)}to{transform:translateY(-100px)}}
+@keyframes hpar{to{transform:translateY(16%) scale(1.06)}}
+@keyframes hwmfly{to{transform:translate3d(0,-90px,0) scale(1.15);filter:blur(10px);opacity:0}}
+.sj .logo{animation:none;transform:translate3d(0,calc(var(--sp,0)*-90px),0) scale(calc(1 + var(--sp,0)*.15));filter:blur(calc(var(--sp,0)*10px));opacity:calc(1 - var(--sp,0))}
+.sj .hcont{animation:none;opacity:calc(1 - var(--sp2,0))}
+.sj .hh1{animation:none;transform:translate3d(0,calc(var(--sp2,0)*-24vh),0) scale(calc(1 + var(--sp2,0)*.9))}
+@keyframes hfade{to{opacity:0}}
+@keyframes hfly{to{transform:translate3d(0,-24vh,0) scale(1.9)}}
+@keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* появление блоков и текста при прокрутке (как на bakatkin-prod.ru) */
+.fx .rv{opacity:0;transform:translateY(64px);transition:opacity .95s var(--ease),transform .95s var(--ease);transition-delay:var(--d,0s)}
+.fx .rv.in{opacity:1;transform:none}
+.fx .rv.rv-now{transition:none}
+.fx .rv[data-split]{opacity:1;transform:none;transition:none}
+.fx .rv[data-split]>*{opacity:0;transform:translateY(64px);transition:opacity .95s var(--ease),transform .95s var(--ease);transition-delay:calc(var(--i,0)*.1s)}
+.fx .rv[data-split].in>*{opacity:1;transform:none}
+.fx .rv[data-split].rv-now>*{transition:none}
+@supports (animation-timeline: view()){
+  .sec::before,.alt::before,.glo::before{animation:gdrift linear both;animation-timeline:view()}
+  .sec::after,.alt::after,.glo::after{animation:gdrift2 linear both;animation-timeline:view()}
+  .hbg{animation:hpar linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
+  .hcont{animation:hfade linear both;animation-timeline:scroll(root);animation-range:0px 72vh}
+  .logo{will-change:transform,filter,opacity;animation:hwmfly cubic-bezier(.4,0,.8,.5) both;animation-timeline:scroll(root);animation-range:0px 45vh}
+  .hh1{transform-origin:0 100%;will-change:transform;animation:hfly cubic-bezier(.45,0,.9,.6) both;animation-timeline:scroll(root);animation-range:0px 72vh}
+  .prog{display:block;position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,#C8283A,#FF6F7B);transform-origin:left;animation:progress linear both;animation-timeline:scroll(root)}
+  .dr{stroke-dasharray:140;animation:draw linear both;animation-timeline:view();animation-range:entry 10% entry 80%}
+  .gl{transform-origin:left;animation:grow linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
+}
+
+/* ---------- общие блоки ---------- */
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.sec{padding:88px 0}
+.alt{background:rgba(28,16,18,.5) repeating-linear-gradient(90deg,rgba(244,234,231,.028) 0 1px,transparent 1px 160px);border-top:1px solid rgba(244,234,231,.08);border-bottom:1px solid rgba(244,234,231,.08)}
+.sec,.alt,.glo{position:relative;overflow:hidden;isolation:isolate}
+
+.sec>*,.alt>*,.glo>*{position:relative;z-index:1}
+.sec::before,.alt::before,.glo::before,.sec::after,.alt::after,.glo::after{content:"";position:absolute;z-index:0;border-radius:50%;pointer-events:none}
+.sec::before,.alt::before,.glo::before{width:780px;height:780px;right:-240px;top:-280px;background:radial-gradient(circle,rgba(200,40,58,.2),rgba(200,40,58,0) 68%)}
+.sec::after,.alt::after,.glo::after{width:640px;height:640px;left:-260px;bottom:-300px;background:radial-gradient(circle,rgba(112,18,34,.38),rgba(112,18,34,0) 68%)}
+.alt::before{right:auto;left:-220px;top:-260px;background:radial-gradient(circle,rgba(255,111,123,.11),rgba(255,111,123,0) 68%)}
+.alt::after{left:auto;right:-240px;bottom:-300px}
+.prog{display:none}
+.anc{scroll-margin-top:24px}
+.h2{margin:0;font-family:var(--disp);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.15;letter-spacing:-.01em}
+.h3{margin:0 0 12px;font-family:var(--disp);font-weight:500;font-size:18px;line-height:1.3}
+.mut{color:#B8A2A0}
+.lead{font-size:18px;line-height:1.65;color:rgba(244,234,231,.85)}
+.mask{display:block;overflow:hidden;padding-bottom:.06em}
+.curt{position:relative;overflow:hidden}
+#pagetop{position:relative;isolation:isolate}
+.wvs{position:sticky;top:0;height:min(100vh,1000px);margin-bottom:calc(-1*min(100vh,1000px));z-index:-1;pointer-events:none;overflow:hidden;opacity:.34}
+.wvv{display:block;width:100%;height:100%;object-fit:cover;filter:blur(1.5px) brightness(.9)}
+@keyframes curtmove{0%{background-size:auto,150% 100%;background-position:0 0,0% 50%}50%{background-size:auto,215% 122%;background-position:0 0,100% 50%}100%{background-size:auto,150% 100%;background-position:0 0,0% 50%}}
+.ph{position:relative;overflow:hidden;padding:150px 0 72px}
+.ph .h1{margin:0;font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(32px,6.4vw,84px);line-height:1.02;letter-spacing:-.015em}
+.crumb{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,234,231,.6);margin-bottom:28px}
+.lnk{border:0;background:none;padding:0;font-family:inherit;font-size:inherit;letter-spacing:inherit;text-transform:inherit;color:#F4EAE7;text-decoration:underline;text-underline-offset:4px}
+.lnk:hover{color:#FF6F7B}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px}
+.cardp{padding:30px 28px 34px;height:100%;box-sizing:border-box}
+.num{display:block;font-family:var(--disp);font-weight:600;font-size:34px;line-height:1;color:#FF6F7B;margin-bottom:18px}
+.li{display:flex;gap:14px;align-items:flex-start;padding:13px 0;border-bottom:1px solid rgba(244,234,231,.1);color:rgba(244,234,231,.88)}
+.li i{flex:none;width:7px;height:7px;margin-top:9px;border:1px solid #FF6F7B;transform:rotate(45deg)}
+.pill{display:inline-flex;align-items:center;padding:10px 18px;border:1px solid rgba(244,234,231,.25);border-radius:999px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;transition:background .4s var(--ease),border-color .4s}
+.pill:hover{background:rgba(244,234,231,.08);border-color:rgba(244,234,231,.5)}
+.trow{display:grid;grid-template-columns:minmax(90px,.8fr) 1.3fr 1.3fr;gap:18px;padding:18px 0;border-bottom:1px solid rgba(244,234,231,.12);font-size:15px}
+.trow b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#B8A2A0}
+.hubc{display:flex;flex-direction:column;gap:10px;width:100%;height:100%;box-sizing:border-box;text-align:left;padding:30px 28px;color:inherit}
+.hubc .more{margin-top:auto;padding-top:16px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#B8A2A0;transition:color .3s}
+.hubc:hover .more{color:#FF6F7B}
+.fbtn{transform-origin:left center;border:0;background:none;padding:0;text-align:left;font-size:14px;color:rgba(244,234,231,.75);transition:color .6s var(--ease),transform .8s var(--ease)}
+.fbtn:hover{color:#FF6F7B;transform:scale(1.15)}
+.mi{display:flex;gap:16px;align-items:baseline;width:100%;box-sizing:border-box;padding:16px 0;border:0;border-bottom:1px solid rgba(244,234,231,.12);background:none;text-align:left;font-family:var(--disp);font-weight:500;font-size:19px;transition:color .3s,padding .45s var(--ease)}
+.mi small{font-family:var(--mono);font-size:11px;color:#B8A2A0;font-weight:400}
+.mi:hover{color:#FF6F7B;padding-left:12px}
+
+/* ---------- кнопки, карточки ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid currentColor;border-radius:999px;position:relative;overflow:hidden;z-index:1;background:transparent}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(244,234,231,.16);transform:scaleY(0);transform-origin:center bottom;transition:transform .9s var(--ease)}
+.btn:hover::before{transform:scaleY(1)}
+.btn:active{transform:scale(.98)}
+.btn .arr{display:inline-block;transition:transform .7s var(--ease)}
+.btn:hover .arr{transform:translate(4px,-4px)}
+.pulse{position:relative;display:inline-flex}
+.pulse::after{content:"";position:absolute;inset:-7px;border:1px solid rgba(255,111,123,.55);border-radius:999px;animation:pulse 2.4s var(--ease) infinite;pointer-events:none}
+.hbar{transition:background .5s,backdrop-filter .5s}
+.scrolled .hbar{background:linear-gradient(rgba(20,11,12,.7),rgba(20,11,12,.35));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.phimg{position:absolute;right:0;top:0;height:100%;width:min(54%,660px);object-fit:cover;opacity:.4;pointer-events:none;z-index:0;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 60%);mask-image:linear-gradient(90deg,transparent 0,#000 60%)}
+.phpost{position:absolute;right:2%;top:76px;bottom:16px;height:calc(100% - 92px);width:auto;max-width:44%;object-fit:contain;pointer-events:none;z-index:0;filter:drop-shadow(0 30px 50px rgba(0,0,0,.45))}
+@media(max-width:760px){.phpost{width:62%;height:auto;bottom:auto;right:-12%;top:150px;opacity:.35}}
+@media(max-width:760px){.phimg{width:100%;opacity:.2;-webkit-mask-image:none;mask-image:none}}
+.cardgrid>.rv{display:flex}
+.cardgrid .pc{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;box-sizing:border-box}
+.ctxt{flex:1;display:flex;flex-direction:column}
+.ctxt>div:last-child{margin-top:auto!important;padding-top:12px}
+.cardgrid .pc .nm{overflow-wrap:anywhere}
+.pc{border:1px solid rgba(244,234,231,.12);border-radius:22px;background:rgba(244,234,231,.02);transition:transform .5s var(--ease),background .5s,border-color .5s}
+.pc{transition:transform .55s var(--ease),background .5s,border-color .5s,box-shadow .55s var(--ease)}
+.pc:hover{transform:translateY(-4px) scale(1.01);background:rgba(244,234,231,.05);border-color:rgba(244,234,231,.35);box-shadow:0 14px 28px rgba(0,0,0,.3)}
+.pc .art{transition:transform 1s var(--ease)}
+.pc:hover .art{transform:scale(1.06) translateY(-1%)}
+.chip{transition:background .4s var(--ease),color .4s var(--ease),border-color .4s,transform .25s}
+.chip:hover{border-color:#F4EAE7!important}
+.chip:active{transform:scale(.95)}
+.nl{position:relative;border:0;background:none;padding:6px 0;opacity:.7;transition:opacity .25s;white-space:nowrap;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.nl::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:#FF6F7B;transform:scaleX(var(--u,0));transform-origin:left;transition:transform .45s var(--ease)}
+.nl:hover{opacity:1}
+.nl:hover::after{transform:scaleX(1)}
+.heart{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.heart:hover{transform:scale(1.15)}
+.hrt{transition:fill .3s,stroke .3s}
+.askl{text-decoration:underline;text-underline-offset:4px}
+.lab{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,234,231,.6);margin-bottom:22px}
+.lab::before{content:"";width:34px;height:1px;background:currentColor}
+.fld{width:100%;box-sizing:border-box;min-height:54px;padding:14px 18px;border-radius:14px;border:1px solid rgba(244,234,231,.22);background:#1F1214;color:#F4EAE7;font:inherit;transition:border-color .3s,background .3s}
+.fld::placeholder{color:rgba(244,234,231,.4)}
+.fld:focus{outline:none;border-color:#FF6F7B;background:#261619}
+textarea.fld{min-height:104px;resize:vertical}
+
+@media(max-width:1080px){.navlinks{display:none!important}}
+@media(max-width:760px){.chipf{display:none}}
+@media(max-width:560px){.wr{display:none!important}.sec{padding:64px 0}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .loader{display:none}.ln{transform:none}.fi{opacity:1}.marq{animation:none}.tag{animation:none}.chipf{animation:none}.wvs{display:none}.hs{animation:none}.hs:first-child{opacity:1}.pbg img{animation:none}
+  .sec,.alt,.glo,.hbg,.hcont,.hh1,.logo,.prog,.sec::before,.sec::after,.alt::before,.alt::after,.glo::before,.glo::after{animation:none!important}
+}
+</style>
+
+<style>html,body{background:#140B0C}</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="tpl">
+
+
+<div style="background:#140B0C;color:#F4EAE7;font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;overflow-x:clip">
+
+  <!-- заставка -->
+  <div class="loader" aria-hidden="true">
+    <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(48px,11vw,120px);letter-spacing:.06em;color:#F4EAE7;line-height:1">
+      <span><i style="animation-delay:0s">R</i></span><span><i style="animation-delay:.08s">s</i></span><span><i style="animation-delay:.16s">m</i></span>
+    </div>
+    <div class="fi" style="font-family:'JetBrains Mono',monospace;font-size:clamp(11px,1.6vw,15px);letter-spacing:.5em;text-transform:uppercase;color:rgba(255,111,123,.8);animation-delay:.5s,2.05s">Collection</div>
+    <div class="fi" style="margin-top:14px;font-family:'Inter',sans-serif;font-size:clamp(12px,1.7vw,16px);letter-spacing:.22em;text-transform:uppercase;color:rgba(244,234,231,.55);text-align:center;padding:0 20px;animation-delay:.95s,2.05s">Ресейл-платформа · Онлайн-бутик</div>
+  </div>
+
+  <!-- шапка и меню -->
+  <header style="position:sticky;top:0;z-index:20;height:0;background:transparent"><div class="prog" aria-hidden="true"></div>
+    <div class="wrap hbar" style="max-width:none;padding:0 28px;height:64px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px">
+      <div style="display:flex;align-items:center;gap:8px;justify-self:start">
+        <a class="btn wr" href="{{ hello }}" style="padding:10px 20px;font-size:12px;color:#F4EAE7;--h:#140B0C"><span>Написать</span></a>
+        
+      </div>
+      <button class="logo" onClick="{{ goHome }}" style="justify-self:center;border:0;background:none;padding:0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:16px;letter-spacing:.02em;white-space:nowrap">Rsm Collection</button>
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px">
+        <button class="heart" onClick="{{ favOpen }}" aria-label="Избранное" style="position:relative;width:44px;height:44px;border:0;background:none;display:grid;place-items:center;border-radius:50%">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F4EAE7" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.7a4.3 4.3 0 0 1 7.5 2.6c0 5.6-7.5 10.2-7.5 10.2z"/></svg>
+          <span style="position:absolute;top:3px;right:1px;min-width:18px;height:18px;border-radius:9px;background:#C8283A;color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;padding:0 4px;transform:scale({{ favScale }});transition:transform .4s cubic-bezier(.3,1.6,.5,1)">{{ favCount }}</span>
+        </button>
+        <button class="btn" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" style="padding:10px 20px;font-size:12px;color:#F4EAE7;--h:#140B0C;min-width:104px"><span>{{ menuLabel }}</span></button>
+        
+      </div>
+    </div>
+    <nav class="navlinks" aria-label="Разделы" style="display:flex;justify-content:center;gap:30px;padding:0 20px 14px">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
+          <button class="nl" onClick="{{ n.go }}" style="--u:{{ n.u }};opacity:{{ n.op }}">{{ n.label }}</button>
+        </sc-for>
+      </nav>
+    <div style="display:grid;grid-template-rows:{{ menuRows }};transition:grid-template-rows .65s cubic-bezier(.22,1,.36,1)">
+      <div style="overflow:hidden;min-height:0;background:rgba(20,11,12,.94)">
+        <div class="wrap" style="padding-top:8px;padding-bottom:30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:0 48px">
+          <sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="11">
+            <button class="mi" onClick="{{ m.go }}" style="color:{{ m.fg }}"><small>{{ m.n }}</small><span>{{ m.label }}</span></button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="pagetop" class="anc">
+  <div class="wvs" aria-hidden="true"><video class="wvv" src="a/6a3bd6ee0dcd33c26b15ad22fff77d4e.mp4" autoplay loop muted playsinline preload="auto" tabindex="-1"></video></div>
+
+  <!-- =================== ГЛАВНАЯ =================== -->
+  <sc-if value="{{ pg.home }}" hint-placeholder-val="{{ true }}">
+  <div class="pg">
+    <section style="position:relative;background:#4A0B15;color:#F4EAE7;overflow:hidden">
+      <div class="hbg" aria-hidden="true">
+        <div class="hs" style="animation-delay:0s"><img class="hbg" src="a/5fa1a618c8c386b78289a1b092a5faea.jpg" alt=""><img class="hm" src="a/5fa1a618c8c386b78289a1b092a5faea.jpg" alt="" style="object-position:62% 50%"></div>
+        <div class="hs" style="animation-delay:8s"><img src="a/27d4a027e7e6ce538ad5e7d0905ec1f5.jpg" alt="" style="object-position:50% 28%"></div>
+        <div class="hs" style="animation-delay:16s"><img src="a/492cc39470db4a6413b4e9f3bccf6976.jpg" alt="" style="object-position:50% 40%"></div>
+        <div class="hs" style="animation-delay:24s"><img src="a/2b57ff62c27ec174b610507e77f0aa0e.jpg" alt="" style="object-position:50% 58%"></div>
+        <div class="hs" style="animation-delay:32s"><img src="a/6407f872cf7414c3d0bdd7130c03300c.jpg" alt="" style="object-position:50% 52%"></div>
+        <div class="hs" style="animation-delay:40s"><img src="a/69d4da1e623d32518c0d498059dd4775.jpg" alt="" style="object-position:50% 55%"></div>
+        <div class="hs" style="animation-delay:48s"><img src="a/6434de6f47b007b9ce873e56825758f7.jpg" alt="" style="object-position:50% 58%"></div>
+        <div class="hs" style="animation-delay:56s"><img src="a/05af0db1ea43af5430fac3c7d1c1b045.jpg" alt="" style="object-position:50% 40%"></div>
+        <div class="hs" style="animation-delay:64s"><img src="a/af3de9547c6fbcfc0f722b4b372cb4fe.jpg" alt="" style="object-position:50% 28%"></div>
+        <div class="hs" style="animation-delay:72s"><img src="a/7b0c3b6954e4ed69db6a023186d9fd5e.jpg" alt="" style="object-position:50% 45%"></div>
+        <div class="hs" style="animation-delay:80s"><img src="a/feefb52e408d6739e7ddb7a994877e1b.jpg" alt="" style="object-position:50% 45%"></div>
+        <div class="hs" style="animation-delay:88s"><img src="a/c31c04f92d6acf059bc0fcfc28cd32aa.jpg" alt="" style="object-position:50% 58%"></div>
+      </div>
+      <div class="ring ring1" aria-hidden="true"></div>
+      <div class="ring ring2" aria-hidden="true"></div>
+      <span class="chipf" aria-hidden="true" style="top:17%;left:36%;--bd:.2s"><b></b>Louis Vuitton</span>
+      <span class="chipf" aria-hidden="true" style="top:19%;right:4%;--bd:.9s"><b></b>Hermès</span>
+      <span class="chipf" aria-hidden="true" style="top:27%;right:35%;--bd:1.6s"><b></b>Dior</span>
+      <span class="chipf" aria-hidden="true" style="top:57%;right:36%;--bd:1.1s"><b></b>Gucci</span>
+      <span class="chipf" aria-hidden="true" style="bottom:16%;right:30%;--bd:.7s"><b></b>Balenciaga</span>
+      <span class="chipf" aria-hidden="true" style="bottom:14%;right:3%;--bd:1.9s"><b></b>Bottega Veneta</span>
+      <span class="chipf" aria-hidden="true" style="bottom:6%;left:3%;--bd:.4s"><b></b>Chanel</span>
+      <div class="hcont" style="position:relative;z-index:2;max-width:none;margin:0;padding:150px 28px 0 28px;display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px 48px;min-height:620px;box-sizing:border-box">
+        <div style="flex:1 1 560px;min-width:0;padding-bottom:56px">
+          <h1 class="hh1" style="margin:0;font-family:'Unbounded',sans-serif;font-weight:600;text-transform:uppercase;font-size:clamp(28px,5.2vw,74px);line-height:1;opacity:.68;letter-spacing:-.015em">
+            <span class="mask"><span class="ln" style="animation-delay:{{ hd.a }}">Люксовые</span></span>
+            <span class="mask"><span class="ln" style="animation-delay:{{ hd.b }}">сумки</span></span>
+          </h1>
+          <p class="fi" style="max-width:36ch;margin:20px 0 0;font-size:15px;color:rgba(244,234,231,.8);animation-delay:{{ hd.c }}">Ресейл-платформа и онлайн-бутик. Каждый лот проходит двухэтапную проверку подлинности, а перед покупкой мы пришлём живые фото и ответим на любые вопросы.</p>
+          <button class="btn fi" onClick="{{ toCatalog }}" style="animation-delay:{{ hd.d }};margin-top:26px;padding:13px 24px;font-size:13px;color:#F4EAE7;--h:#4A0B15"><span>Смотреть каталог</span><span class="arr" aria-hidden="true">↗</span></button>
+        </div>
+        <div style="flex:0 0 240px;display:flex;justify-content:center;margin:0 auto">
+          <button class="tag" onClick="{{ tagOpen }}" aria-label="Открыть новое поступление" style="border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;text-align:left;color:#F4EAE7">
+            <span style="width:1px;height:64px;background:linear-gradient(rgba(255,111,123,0),#FF6F7B)"></span>
+            <span style="position:relative;display:block;width:208px;box-sizing:border-box;padding:20px 14px 18px;border-radius:20px;background:rgba(20,11,12,.58);backdrop-filter:blur(14px);border:1px solid rgba(244,234,231,.22);box-shadow:0 22px 44px rgba(0,0,0,.45)">
+              <span style="position:absolute;top:-5px;left:50%;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:#FF6F7B;box-shadow:0 0 0 3px rgba(255,111,123,.2)"></span>
+              <span style="display:inline-block;margin:4px 0 0 6px;background:#C8283A;color:#fff;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px">Новое поступление</span>
+              <span style="display:block;padding:16px 6px 0">
+                <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,234,231,.6)">{{ tag.brand }}</span>
+                <span style="display:block;margin-top:4px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:13px;line-height:1.3">{{ tag.name }}</span>
+                <span style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;font-family:'Unbounded',sans-serif;font-weight:600;font-size:15px;color:#FF6F7B">{{ tag.price }}<span style="font-family:'JetBrains Mono',monospace;font-weight:400;font-size:12px;color:rgba(244,234,231,.7)">↗</span></span>
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div style="position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:22px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,234,231,.55)">
+        <span>Каждая вещь в одном экземпляре</span>
+        <span style="display:flex;align-items:center;gap:10px">Листайте <span style="position:relative;display:inline-block;width:1px;height:34px;background:rgba(244,234,231,.22);overflow:hidden"><span class="drip"></span></span></span>
+      </div>
+    </section>
+
+    <div class="marqwrap" aria-hidden="true" style="background:transparent;border-top:1px solid rgba(244,234,231,.12);border-bottom:1px solid rgba(244,234,231,.12);color:#F4EAE7;overflow:hidden;white-space:nowrap;padding:22px 0">
+      <div class="marq">
+        <sc-for list="{{ brandsLoop }}" as="b" hint-placeholder-count="8">
+          <span style="font-family:'Unbounded',sans-serif;font-weight:500;font-size:16px;padding:0 32px;position:relative">{{ b }}<span style="position:absolute;right:-3px;top:50%;width:6px;height:6px;margin-top:-3px;border:1px solid #E0525F;transform:rotate(45deg)"></span></span>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- каталог -->
+    <section id="catalog" class="anc glo" style="padding:96px 0 72px">
+      <div class="wrap">
+        <div class="rv" style="margin-bottom:34px">
+          <div class="lab">Каталог</div>
+          <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px">
+            <h2 class="h2">В наличии сейчас</h2>
+            <p class="mut" style="margin:0;max-width:36ch">Если вещь понравилась, лучше написать сразу: второго экземпляра нет. Все актуальные лоты <a href="{{ channelLink }}" target="_blank" rel="noopener" style="color:#FF6F7B">в нашем канале</a>.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px">
+          <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="4">
+            <button class="chip" onClick="{{ ch.pick }}" aria-pressed="{{ ch.on }}" style="min-height:42px;padding:0 20px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:{{ ch.bg }};color:{{ ch.fg }};border:1px solid {{ ch.bd }}">{{ ch.label }}<span style="opacity:.7;margin-left:8px">{{ ch.n }}</span></button>
+          </sc-for>
+        </div>
+
+        <div id="detail" class="anc" style="display:grid;grid-template-rows:{{ detailRows }};transition:grid-template-rows .7s cubic-bezier(.22,1,.36,1)">
+          <div style="overflow:hidden;min-height:0">
+            <div style="display:flex;flex-wrap:wrap;gap:32px;padding:24px;margin-bottom:36px;background:#1F1214;border:1px solid rgba(244,234,231,.12);border-radius:22px;opacity:{{ detailOpacity }};transition:opacity .5s ease .1s">
+              <div style="flex:0 0 340px;max-width:100%;display:flex;flex-direction:column;gap:10px">
+                <div style="aspect-ratio:4/5;border-radius:14px;overflow:hidden;position:relative;background:#2A1719">
+                  <img src="{{ detail.main }}" alt="{{ detail.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <sc-for list="{{ detail.thumbs }}" as="th" hint-placeholder-count="4">
+                    <button onClick="{{ th.pick }}" aria-label="Показать фото" style="width:56px;height:70px;padding:0;border-radius:8px;overflow:hidden;background:#2A1719;border:2px solid {{ th.bd }};opacity:{{ th.op }};transition:opacity .3s,border-color .3s"><img src="{{ th.src }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="flex:1 1 280px;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:6px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#B8A2A0">{{ detail.brand }}</span>
+                <h3 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(22px,2.6vw,32px);line-height:1.2">{{ detail.name }}</h3>
+                <span style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:24px;color:#FF6F7B;margin-top:10px">{{ detail.price }}</span>
+                <div style="margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:15px">
+                  <span class="mut">Состояние</span><span>{{ detail.cond }}</span>
+                  <span class="mut">Размер</span><span>{{ detail.size }}</span>
+                </div>
+                <p class="mut" style="margin:12px 0 0;max-width:44ch;font-size:14px">Это фото именно этой сумки. Точные замеры и комплектацию пришлём в Telegram.</p>
+                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:24px">
+                  <span class="pulse"><a class="btn" href="{{ detail.link }}" style="padding:16px 28px;color:#fff;background:#C8283A;border-color:#C8283A;--h:#C8283A"><span>Написать менеджеру</span><span class="arr" aria-hidden="true">↗</span></a></span>
+                  <button class="btn" onClick="{{ detail.fav }}" style="padding:16px 24px;color:#F4EAE7;--h:#140B0C"><span>{{ detail.favLabel }}</span></button>
+                  <button onClick="{{ closeDetail }}" style="min-height:48px;padding:0 14px;border:0;background:none;color:#B8A2A0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px 20px">
+          <sc-for list="{{ cards }}" as="c" hint-placeholder-count="4">
+            <div class="rv">
+              <div class="pc" style="padding:10px 10px 20px">
+                <div style="position:relative">
+                  <button onClick="{{ c.open }}" aria-label="Открыть: {{ c.brand }} {{ c.name }}" style="display:block;width:100%;padding:0;border:0;background:#2A1719;aspect-ratio:4/5;border-radius:14px;overflow:hidden;position:relative">
+                    <img class="art" src="{{ c.img }}" alt="{{ c.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  </button>
+                  <sc-if value="{{ c.badge }}" hint-placeholder-val="{{ true }}">
+                    <span style="position:absolute;left:12px;top:12px;background:#C8283A;color:#fff;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 11px;border-radius:999px;pointer-events:none">{{ c.badge }}</span>
+                  </sc-if>
+                  <button class="heart" onClick="{{ c.fav }}" aria-label="В избранное" aria-pressed="{{ c.faved }}" style="position:absolute;right:6px;top:6px;width:46px;height:46px;border:0;background:none;display:grid;place-items:center;border-radius:50%">
+                    <svg class="hrt" width="24" height="24" viewBox="0 0 24 24" fill="{{ c.hf }}" stroke="{{ c.hs }}" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.7a4.3 4.3 0 0 1 7.5 2.6c0 5.6-7.5 10.2-7.5 10.2z"/></svg>
+                  </button>
+                </div>
+                <div class="ctxt" style="padding:16px 8px 0">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#B8A2A0">{{ c.brand }}</div>
+                  <button class="nm" onClick="{{ c.open }}" style="display:block;text-align:left;border:0;background:none;padding:0;margin-top:6px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:15px;line-height:1.3">{{ c.name }}</button>
+                  <div style="margin-top:12px;font-family:'Unbounded',sans-serif;font-weight:500;font-size:16px;color:#FF6F7B">{{ c.price }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ noCards }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:56px 0;text-align:center" class="mut">
+            <div style="font-family:'Unbounded',sans-serif;font-weight:500;font-size:22px;color:#F4EAE7;margin-bottom:8px">{{ emptyTitle }}</div>
+            <div>{{ emptyText }}</div>
+          </div>
+        </sc-if>
+      </div>
+    </section>
+
+    <!-- проданное -->
+    <section class="glo" style="padding:0 0 96px;display:{{ soldDisp }}">
+      <div class="wrap">
+        <div class="rv" style="margin-bottom:30px">
+          <div class="lab">Продано</div>
+          <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px">
+            <h2 class="h2">Недавно продано</h2>
+            <p class="mut" style="margin:0;max-width:36ch">Хотите такую же? Напишите, найдём под вас.</p>
+          </div>
+        </div>
+        <div class="cardgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:20px 18px">
+          <sc-for list="{{ sold }}" as="s" hint-placeholder-count="4">
+            <div class="rv">
+              <div class="pc" style="padding:10px 10px 16px">
+                <div style="position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:#2A1719;filter:saturate(.5)">
+                  <img class="art" src="{{ s.img }}" alt="{{ s.brand }} {{ s.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+                  <span style="position:absolute;left:0;right:0;bottom:0;padding:9px 14px;background:rgba(12,6,7,.85);color:#F4EAE7;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase">Продано</span>
+                </div>
+                <div style="padding:12px 6px 0;line-height:1.35"><b style="font-family:'Unbounded',sans-serif;font-weight:500;font-size:14px">{{ s.brand }}</b><br><span class="mut" style="font-size:14px">{{ s.name }}</span></div>
+                <div style="padding:6px 6px 0"><a class="askl" href="{{ s.link }}" style="display:inline-block;font-size:14px;color:#FF6F7B;min-height:32px;padding-top:4px">Найти такую же</a></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- разделы сайта -->
+    <section class="sec alt">
+      <div class="wrap">
+        <div class="rv" style="margin-bottom:40px">
+          <div class="lab">Разделы</div>
+          <h2 class="h2">Всё, что нужно знать</h2>
+        </div>
+        <div class="grid3">
+          <sc-for list="{{ hubs }}" as="h" hint-placeholder-count="6">
+            <div class="rv">
+              <button class="pc hubc" onClick="{{ h.go }}">
+                <span class="num">{{ h.n }}</span>
+                <span class="h3" style="margin:0">{{ h.t }}</span>
+                <span class="mut">{{ h.d }}</span>
+                <span class="more">Подробнее ↗</span>
+              </button>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- заявка -->
+    <section class="curt" style="color:#F4EAE7;padding:104px 0">
+      <div class="rv wrap" style="display:flex;flex-wrap:wrap;gap:40px 72px;align-items:center">
+        <div style="flex:1 1 420px;min-width:0">
+          <h2 class="h2" style="line-height:1.2;max-width:18ch">Продайте свою сумку или закажите нужную</h2>
+          <p style="margin:20px 0 0;color:rgba(244,234,231,.85);max-width:40ch">Напишите нам в Telegram, ответим в течение дня. Расскажите бренд, модель и желаемую цену, остальное уточним в чате.</p>
+        </div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:14px">
+          <button class="btn" onClick="{{ toBuyout }}" style="justify-content:space-between;min-height:76px;padding:0 30px;font-size:14px;color:#F4EAE7;--h:#8C1626"><span>Продать свою вещь</span><span class="arr" aria-hidden="true">↗</span></button>
+          <button class="btn" onClick="{{ toConcierge }}" style="justify-content:space-between;min-height:76px;padding:0 30px;font-size:14px;color:#F4EAE7;--h:#8C1626"><span>Найти модель под заказ</span><span class="arr" aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+    </section>
+    <!-- Rsm в телефоне -->
+    <section class="sec"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 72px;align-items:center">
+      <div class="rv" style="flex:0 1 380px;min-width:0;max-width:100%"><img src="a/01b7ab523f54a009ac939e20944a0be4.webp" alt="Rsm Collection на телефоне" loading="lazy" width="860" height="1353" style="display:block;width:100%;height:auto;aspect-ratio:860/1353;object-fit:contain"></div>
+      <div class="rv" style="flex:1 1 360px;min-width:0">
+        <div class="lab">Всегда с вами</div>
+        <h2 class="h2">Rsm Collection в телефоне</h2>
+        <p class="mut" style="margin:18px 0 0;max-width:46ch;font-size:18px;line-height:1.6">Каталог, актуальные лоты и связь с менеджером. Всё, что нужно, чтобы выбрать сумку и написать нам, в одном месте и под рукой.</p>
+        <a class="btn" href="{{ channelLink }}" target="_blank" rel="noopener" style="margin-top:28px;padding:15px 28px;color:#F4EAE7;--h:#140B0C"><span>Наш канал в Telegram</span><span class="arr" aria-hidden="true">↗</span></a>
+      </div>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== О НАС =================== -->
+  <sc-if value="{{ pg.about }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/c4a553073cf2aa2b88e85c98e41c1ea0.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / О нас</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">О нас</span></span></h1>
+      <p class="lead fi" style="max-width:52ch;margin:26px 0 0;animation-delay:.4s">Rsm Collection — это ресейл-платформа и онлайн-бутик, где каждый лот проходит строгий многоступенчатый отбор.</p>
+    </div></section>
+    <section class="sec"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 72px;align-items:flex-start">
+      <div class="rv" style="flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:22px;font-size:18px;line-height:1.65" >
+        <p style="margin:0">Более года мы помогаем ценителям люкса находить идеальные сумки и аксессуары — от культовой классики до редких экземпляров, которые сложно найти в открытом доступе. Наши эксперты тщательно оценивают состояние, подлинность и инвестиционную ценность каждого лота, используя профессиональное оборудование и собственные базы данных.</p>
+        <p class="mut" style="margin:0">А ещё мы всегда рядом: подробно консультируем по любым вопросам, помогаем с поиском конкретной позиции под запрос, организуем бережную доставку в любой регион России и за её пределы. Мы делаем всё, чтобы ваш выбор был осознанным, а покупка — безупречной.</p>
+      </div>
+      <div class="rv" style="flex:1 1 320px;min-width:0">
+        <sc-for list="{{ aboutPoints }}" as="a" hint-placeholder-count="4"><div class="li"><i></i><span>{{ a }}</span></div></sc-for>
+      </div>
+    </div></section>
+    <section class="sec"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 72px;align-items:center">
+      <div class="rv" style="flex:0 1 380px;min-width:0;max-width:100%"><img src="a/01b7ab523f54a009ac939e20944a0be4.webp" alt="Rsm Collection на телефоне" loading="lazy" width="860" height="1353" style="display:block;width:100%;height:auto;aspect-ratio:860/1353;object-fit:contain"></div>
+      <div class="rv" style="flex:1 1 360px;min-width:0">
+        <div class="lab">Всегда с вами</div>
+        <h2 class="h2">Rsm Collection в телефоне</h2>
+        <p class="mut" style="margin:18px 0 0;max-width:46ch;font-size:18px;line-height:1.6">Каталог, актуальные лоты и связь с менеджером. Всё, что нужно, чтобы выбрать сумку и написать нам, в одном месте и под рукой.</p>
+        <a class="btn" href="{{ channelLink }}" target="_blank" rel="noopener" style="margin-top:28px;padding:15px 28px;color:#F4EAE7;--h:#140B0C"><span>Наш канал в Telegram</span><span class="arr" aria-hidden="true">↗</span></a>
+      </div>
+    </div></section>
+    <section class="sec alt"><div class="wrap">
+      <div class="rv" style="margin-bottom:40px"><div class="lab">Принципы</div><h2 class="h2">Как мы работаем</h2></div>
+      <div class="grid3">
+        <sc-for list="{{ principles }}" as="p" hint-placeholder-count="3">
+          <div class="rv"><div class="pc cardp"><span class="num">{{ p.n }}</span><h3 class="h3">{{ p.t }}</h3><p class="mut" style="margin:0">{{ p.d }}</p></div></div>
+        </sc-for>
+      </div>
+      <div style="margin-top:44px;display:flex;flex-wrap:wrap;gap:14px">
+        <button class="btn" onClick="{{ toCatalog }}" style="min-height:58px;padding:0 32px;color:#F4EAE7;--h:#1C1012"><span>Смотреть каталог</span><span class="arr" aria-hidden="true">↗</span></button>
+        <a class="btn" href="{{ hello }}" style="min-height:58px;padding:0 32px;color:#F4EAE7;--h:#1C1012"><span>Написать нам</span><span class="arr" aria-hidden="true">↗</span></a>
+      </div>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== ОПЛАТА И ДОСТАВКА =================== -->
+  <sc-if value="{{ pg.delivery }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/dfac5fe4473b71de03edfdad01213613.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / Оплата и доставка</div>
+        <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">Оплата</span></span><span class="mask"><span class="ln" style="animation-delay:.2s">и доставка</span></span></h1>
+        <p class="lead fi" style="max-width:52ch;margin:26px 0 0;animation-delay:.45s">Мы ценим ваше время и доверие, поэтому выстраиваем процесс доставки с большим вниманием, чтобы покупка приносила только приятные эмоции.</p>
+      </div></section>
+    <section class="sec"><div class="wrap"><div class="grid3">
+      <sc-for list="{{ delivery }}" as="d" hint-placeholder-count="6">
+        <div class="rv"><div class="pc cardp"><h3 class="h3">{{ d.title }}</h3><p class="mut" style="margin:0">{{ d.text }}</p></div></div>
+      </sc-for>
+    </div></div></section>
+    <section class="sec alt"><div class="wrap">
+      <div class="rv" style="margin-bottom:40px"><div class="lab">Порядок заказа</div><h2 class="h2">Как это происходит</h2></div>
+      <div class="grid3">
+        <sc-for list="{{ orderSteps }}" as="s" hint-placeholder-count="4">
+          <div class="rv"><div class="pc cardp"><span class="num">{{ s.n }}</span><h3 class="h3">{{ s.t }}</h3><p class="mut" style="margin:0">{{ s.d }}</p></div></div>
+        </sc-for>
+      </div>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== ПОДЛИННОСТЬ =================== -->
+  <sc-if value="{{ pg.auth }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/a9e95391384e0b8c313b65803e2ee77a.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / Подлинность</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">Гарантия</span></span><span class="mask"><span class="ln" style="animation-delay:.2s">подлинности</span></span></h1>
+      <p class="lead fi" style="max-width:52ch;margin:26px 0 0;animation-delay:.45s">Подлинность — наш главный приоритет. В Rsm Collection каждый лот проходит строгую двухэтапную экспертизу, прежде чем попасть в каталог.</p>
+    </div></section>
+    <section class="sec"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:48px 64px">
+      <div class="rv" style="flex:1 1 400px;min-width:0">
+        <div class="gl" style="height:1px;background:#C8283A;margin-bottom:26px"></div>
+        <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#FF6F7B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="9"/><path class="dr" d="M23 23l7 7"/></svg>
+        <h3 class="h3" style="margin:18px 0 14px;font-size:20px">Этап 1. Профессиональный анализ</h3>
+        <p class="mut" style="margin:0 0 16px">Наши специалисты досконально изучают фурнитуру, материалы, штампы, серийные коды и все технические нюансы исполнения, характерные для конкретного бренда и модели. Мы используем профессиональное оборудование, а также сверяем данные с собственными и международными базами.</p>
+        <h3 class="h3" style="margin:30px 0 14px;font-size:20px">Этап 2. Личный физический осмотр</h3>
+        <p class="mut" style="margin:0">Наш эксперт с многолетним стажем вручную проверяет качество швов, структуру материалов, комплектность и особенности, которые видны только профессионалам.</p>
+      </div>
+      <div class="rv" style="flex:1 1 400px;min-width:0">
+        <div class="gl" style="height:1px;background:#C8283A;margin-bottom:26px"></div>
+        <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#FF6F7B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 4l11 4v9c0 7-5 11-11 15C12 28 7 24 7 17V8z"/><path class="dr" d="M12.5 17.500l4 4 7-8"/></svg>
+        <h3 class="h3" style="margin:18px 0 14px;font-size:20px">Ответственность, закреплённая делом</h3>
+        <p style="margin:0 0 16px;color:rgba(244,234,231,.88)">Если независимая сертифицированная экспертиза подтвердит, что изделие не является аутентичным, мы возвращаем 100% стоимости покупки без оговорок и сложных условий.</p>
+        <p class="mut" style="margin:0">Кроме того, мы всегда готовы предоставить дополнительные фото, видео или макросъёмку деталей по запросу, организовать дополнительную проверку и ответить на любые вопросы. Мы несём полную материальную ответственность за каждый лот, потому что ваша уверенность в покупке — наша главная ценность.</p>
+      </div>
+    </div></section>
+    <section class="sec alt"><div class="wrap">
+      <div class="rv" style="margin-bottom:34px"><div class="lab">Что проверяем</div><h2 class="h2">Проверяем всё, что видно и что скрыто</h2></div>
+      <div class="rv" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:44px">
+        <sc-for list="{{ checks }}" as="c" hint-placeholder-count="8"><span class="pill">{{ c }}</span></sc-for>
+      </div>
+      <a class="btn" href="{{ photoLink }}" style="min-height:58px;padding:0 32px;color:#F4EAE7;--h:#1C1012"><span>Запросить фото и видео вещи</span><span class="arr" aria-hidden="true">↗</span></a>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== КОНСЬЕРЖ =================== -->
+  <sc-if value="{{ pg.concierge }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/cc76eb37bb8df6745ccf3666525d43b3.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / Консьерж</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">RSM</span></span><span class="mask"><span class="ln" style="animation-delay:.2s">Concierge</span></span></h1>
+      <p class="lead fi" style="max-width:56ch;margin:26px 0 0;animation-delay:.45s">Эксклюзивный сервис индивидуального подбора лотов для тех, кто ищет идеальное дополнение к своему стилю. Мы находим модели, которых нет в открытом доступе: от архивной классики до самых новых и лимитированных коллекций.</p>
+      <button class="btn fi" onClick="{{ toForm }}" style="animation-delay:.6s;margin-top:32px;min-height:58px;padding:0 32px;color:#F4EAE7;--h:#4A0B15"><span>Оставить запрос</span><span class="arr" aria-hidden="true">↗</span></button>
+    </div></section>
+    <section class="sec"><div class="wrap"><div class="grid3">
+      <sc-for list="{{ concierge }}" as="k" hint-placeholder-count="3">
+        <div class="rv"><div class="pc cardp"><span class="num">{{ k.n }}</span><h3 class="h3">{{ k.title }}</h3><p class="mut" style="margin:0">{{ k.text }}</p></div></div>
+      </sc-for>
+    </div></div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== ВЫКУП =================== -->
+  <sc-if value="{{ pg.buyout }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/d08eae7ef4c64ff9f862ed4d1183b0bf.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / Продать / Выкуп</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">Выкуп</span></span><span class="mask"><span class="ln" style="animation-delay:.2s">вещей</span></span></h1>
+      <p class="lead fi" style="max-width:56ch;margin:26px 0 0;animation-delay:.45s">Продайте сумку без ожидания покупателя. Мы оценим вещь, назовём цену и выплатим деньги сразу после проверки.</p>
+      <div class="fi" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;animation-delay:.6s">
+        <sc-for list="{{ sellTabs }}" as="t" hint-placeholder-count="2">
+          <button class="chip" onClick="{{ t.go }}" style="min-height:42px;padding:0 20px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:{{ t.bg }};color:{{ t.fg }};border:1px solid {{ t.bd }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec"><div class="wrap">
+      <div class="rv" style="margin-bottom:40px"><div class="lab">Порядок работы</div><h2 class="h2">Как проходит выкуп</h2></div>
+      <div class="grid3">
+        <sc-for list="{{ buySteps }}" as="s" hint-placeholder-count="5">
+          <div class="rv"><div class="pc cardp"><span class="num">{{ s.n }}</span><h3 class="h3">{{ s.t }}</h3><p class="mut" style="margin:0">{{ s.d }}</p></div></div>
+        </sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec alt"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:48px 64px;align-items:flex-start">
+      <div class="rv" style="flex:1 1 360px;min-width:0">
+        <div class="lab">Принимаем</div>
+        <h2 class="h2" style="margin-bottom:24px">Что мы выкупаем</h2>
+        <sc-for list="{{ buyYes }}" as="t" hint-placeholder-count="4"><div class="li"><i></i><span>{{ t }}</span></div></sc-for>
+      </div>
+      <div class="rv" style="flex:1 1 360px;min-width:0">
+        <div class="lab">Не берём</div>
+        <h2 class="h2" style="margin-bottom:24px">Что не выкупаем</h2>
+        <sc-for list="{{ buyNo }}" as="t" hint-placeholder-count="3"><div class="li"><i></i><span>{{ t }}</span></div></sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:48px 64px;align-items:flex-start">
+      <div class="rv" style="flex:1 1 360px;min-width:0">
+        <div class="lab">Оценка</div>
+        <h2 class="h2" style="margin-bottom:22px">От чего зависит цена</h2>
+        <p class="mut" style="margin:0 0 24px">Точную сумму называем после осмотра. Предварительно цену определяют пять факторов.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><sc-for list="{{ priceFactors }}" as="t" hint-placeholder-count="5"><span class="pill">{{ t }}</span></sc-for></div>
+      </div>
+      <div class="rv" style="flex:1 1 360px;min-width:0">
+        <div class="lab">Подготовьте</div>
+        <h2 class="h2" style="margin-bottom:24px">Какие фото прислать</h2>
+        <sc-for list="{{ photoList }}" as="t" hint-placeholder-count="6"><div class="li"><i></i><span>{{ t }}</span></div></sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec alt"><div class="wrap">
+      <div class="rv" style="margin-bottom:34px"><div class="lab">Сравнение</div><h2 class="h2">Выкуп или комиссия?</h2></div>
+      <div class="rv" style="max-width:900px">
+        <div class="trow" style="padding-top:0"><b></b><b>Выкуп</b><b>Комиссия</b></div>
+        <sc-for list="{{ compare }}" as="r" hint-placeholder-count="5"><div class="trow"><b>{{ r.a }}</b><span>{{ r.b }}</span><span>{{ r.c }}</span></div></sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec"><div class="wrap">
+      <div class="rv" style="margin-bottom:34px"><div class="lab">Вопросы</div><h2 class="h2">Про выкуп</h2></div>
+      <div style="border-top:1px solid #C8283A;max-width:860px">
+        <sc-for list="{{ buyFaq }}" as="q" hint-placeholder-count="4">
+          <div style="border-bottom:1px solid rgba(244,234,231,.16)">
+            <button onClick="{{ q.toggle }}" aria-expanded="{{ q.open }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left;padding:24px 0;min-height:68px;border:0;background:none;font-family:'Unbounded',sans-serif;font-weight:500;font-size:17px;line-height:1.35">
+              <span>{{ q.q }}</span>
+              <span style="flex:none;position:relative;width:22px;height:22px"><span style="position:absolute;left:3px;right:3px;top:10px;height:1.5px;background:#FF6F7B"></span><span style="position:absolute;left:3px;right:3px;top:10px;height:1.5px;background:#FF6F7B;transform:rotate({{ q.rot }});transition:transform .45s cubic-bezier(.22,1,.36,1)"></span></span>
+            </button>
+            <div style="display:grid;grid-template-rows:{{ q.rows }};transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1)"><div style="overflow:hidden;min-height:0"><p class="mut" style="margin:0;padding:0 0 26px;max-width:60ch">{{ q.a }}</p></div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== КОМИССИЯ / РЕАЛИЗАЦИЯ =================== -->
+  <sc-if value="{{ pg.consign }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/09382ebd047be893a79f7a80b218eed7.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / Продать / Комиссия</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">Продажа</span></span><span class="mask"><span class="ln" style="animation-delay:.2s">на комиссии</span></span></h1>
+      <p class="lead fi" style="max-width:58ch;margin:26px 0 0;animation-delay:.45s">Мы продадим вашу сумку через каталог Rsm Collection: оценим, подготовим, сфотографируем и найдём покупателя. Вы получаете выручку за вычетом комиссии.</p>
+      <div class="fi" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;animation-delay:.6s">
+        <sc-for list="{{ sellTabs }}" as="t" hint-placeholder-count="2">
+          <button class="chip" onClick="{{ t.go }}" style="min-height:42px;padding:0 20px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:{{ t.bg }};color:{{ t.fg }};border:1px solid {{ t.bd }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec"><div class="wrap">
+      <div class="rv" style="margin-bottom:40px"><div class="lab">Что мы берём на себя</div><h2 class="h2">Всё, чтобы вещь продалась</h2></div>
+      <div class="grid3">
+        <sc-for list="{{ consDo }}" as="d" hint-placeholder-count="5">
+          <div class="rv"><div class="pc cardp"><span class="num">{{ d.n }}</span><h3 class="h3">{{ d.t }}</h3><p class="mut" style="margin:0">{{ d.d }}</p></div></div>
+        </sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec alt"><div class="wrap">
+      <div class="rv" style="margin-bottom:40px"><div class="lab">Порядок работы</div><h2 class="h2">Как это устроено</h2></div>
+      <div class="grid3">
+        <sc-for list="{{ consSteps }}" as="s" hint-placeholder-count="6">
+          <div class="rv"><div class="pc cardp"><span class="num">{{ s.n }}</span><h3 class="h3">{{ s.t }}</h3><p class="mut" style="margin:0">{{ s.d }}</p></div></div>
+        </sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:48px 64px;align-items:flex-start">
+      <div class="rv" style="flex:1 1 380px;min-width:0">
+        <div class="lab">Условия</div>
+        <h2 class="h2" style="margin-bottom:24px">Комиссия</h2>
+        <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3"><div class="trow" style="grid-template-columns:1.4fr 1fr"><span>{{ t.r }}</span><b style="font-family:'Unbounded',sans-serif;font-size:20px;color:#FF6F7B;text-transform:none;letter-spacing:0">{{ t.p }}</b></div></sc-for>
+        <p class="mut" style="margin:22px 0 0;font-size:15px">{{ tierNote }}</p>
+      </div>
+      <div class="rv" style="flex:1 1 380px;min-width:0">
+        <div class="lab">Выплата</div>
+        <h2 class="h2" style="margin-bottom:24px">Как вы получаете деньги</h2>
+        <sc-for list="{{ payoutList }}" as="t" hint-placeholder-count="4"><div class="li"><i></i><span>{{ t }}</span></div></sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec alt"><div class="wrap">
+      <div class="rv" style="margin-bottom:34px"><div class="lab">Сравнение</div><h2 class="h2">Комиссия или выкуп?</h2></div>
+      <div class="rv" style="max-width:900px">
+        <div class="trow" style="padding-top:0"><b></b><b>Выкуп</b><b>Комиссия</b></div>
+        <sc-for list="{{ compare }}" as="r" hint-placeholder-count="5"><div class="trow"><b>{{ r.a }}</b><span>{{ r.b }}</span><span>{{ r.c }}</span></div></sc-for>
+      </div>
+    </div></section>
+
+    <section class="sec"><div class="wrap">
+      <div class="rv" style="margin-bottom:34px"><div class="lab">Вопросы</div><h2 class="h2">Про комиссию</h2></div>
+      <div style="border-top:1px solid #C8283A;max-width:860px">
+        <sc-for list="{{ consFaq }}" as="q" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid rgba(244,234,231,.16)">
+            <button onClick="{{ q.toggle }}" aria-expanded="{{ q.open }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left;padding:24px 0;min-height:68px;border:0;background:none;font-family:'Unbounded',sans-serif;font-weight:500;font-size:17px;line-height:1.35">
+              <span>{{ q.q }}</span>
+              <span style="flex:none;position:relative;width:22px;height:22px"><span style="position:absolute;left:3px;right:3px;top:10px;height:1.5px;background:#FF6F7B"></span><span style="position:absolute;left:3px;right:3px;top:10px;height:1.5px;background:#FF6F7B;transform:rotate({{ q.rot }});transition:transform .45s cubic-bezier(.22,1,.36,1)"></span></span>
+            </button>
+            <div style="display:grid;grid-template-rows:{{ q.rows }};transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1)"><div style="overflow:hidden;min-height:0"><p class="mut" style="margin:0;padding:0 0 26px;max-width:60ch">{{ q.a }}</p></div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== УСЛУГИ =================== -->
+  <sc-if value="{{ pg.services }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/a0b8dc6135d833ca991717fab482255a.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / Услуги</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">Услуги</span></span></h1>
+      <p class="lead fi" style="max-width:52ch;margin:26px 0 0;animation-delay:.4s">Всё, что нужно владельцу люксовых вещей, в одном месте.</p>
+    </div></section>
+    <section class="sec"><div class="wrap"><div class="grid3">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="4">
+        <div class="rv"><div class="pc cardp" style="display:flex;flex-direction:column"><span class="num">{{ s.n }}</span><h3 class="h3">{{ s.t }}</h3><p class="mut" style="margin:0 0 22px">{{ s.d }}</p><a class="askl" href="{{ s.link }}" style="margin-top:auto;color:#FF6F7B;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase">Узнать подробнее ↗</a></div></div>
+      </sc-for>
+    </div></div></section>
+    <section id="gift" class="sec alt anc"><div class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;gap:40px 64px">
+      <div class="rv" style="flex:1 1 380px;min-width:0">
+        <div class="lab">Подарочный сертификат</div>
+        <h2 class="h2" style="margin-bottom:22px">Сертификат на покупку вещей</h2>
+        <p class="mut" style="margin:0 0 14px;max-width:46ch">Подарите возможность выбрать вещь самостоятельно. Получатель сам выберет сумку или одежду в каталоге Rsm Collection.</p>
+        <p class="mut" style="margin:0 0 28px;max-width:46ch">Номинал любой. Напишите менеджеру, и мы оформим сертификат.</p>
+        <span class="pulse"><a class="btn" href="{{ giftLink }}" style="padding:16px 28px;color:#fff;background:#C8283A;border-color:#C8283A;--h:#C8283A"><span>Заказать сертификат</span><span class="arr" aria-hidden="true">↗</span></a></span>
+      </div>
+      <div class="rv" style="flex:1 1 420px;min-width:0;max-width:560px">
+        <div style="aspect-ratio:1;border-radius:22px;overflow:hidden;background:#2A1719;border:1px solid rgba(244,234,231,.14);box-shadow:0 30px 70px rgba(0,0,0,.45)">
+          <img src="a/c3b8eb0f9437bf4ae3198e9f130ed5a1.jpg" alt="Подарочный сертификат Rsm Collection на покупку вещей" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+      </div>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== ПАРТНЁРАМ =================== -->
+  <sc-if value="{{ pg.partners }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/f9b6e91bf2da867010e88318b9c2533b.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / Партнёрам</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">Партнёрам</span></span></h1>
+      <p class="lead fi" style="max-width:56ch;margin:26px 0 0;animation-delay:.4s">Команда бутика RSM всегда открыта к сотрудничеству, коллаборациям и новым знакомствам.</p>
+    </div></section>
+    <section class="sec"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 72px;align-items:flex-start">
+      <div class="rv" style="flex:1.3 1 440px;min-width:0;display:flex;flex-direction:column;gap:20px;font-size:18px;line-height:1.65">
+        <p style="margin:0">Мы приглашаем к партнёрству стилистов, фотографов, инфлюенсеров и баеров. Для коллег у нас предусмотрена специальная система лояльности, в рамках которой вы можете получить кэшбек, а также индивидуальные условия реализации лотов.</p>
+        <p class="mut" style="margin:0">Наша цель — объединять тех, кто ценит качество, осознанное потребление и индивидуальность. Вместе мы создаём пространство, где каждый лот находит своего клиента, а каждый партнёр — новые возможности.</p>
+        <p class="mut" style="margin:0">Чтобы начать сотрудничество, заполните форму ниже либо напишите нашему <a class="askl" href="{{ hello }}" style="color:#FF6F7B">менеджеру</a> — мы свяжемся с вами в ближайшее время.</p>
+      </div>
+      <div class="rv" style="flex:1 1 300px;min-width:0">
+        <sc-for list="{{ partnerWho }}" as="t" hint-placeholder-count="4"><div class="li"><i></i><span>{{ t }}</span></div></sc-for>
+      </div>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== FAQ =================== -->
+  <sc-if value="{{ pg.faq }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/34f450e0e03036d34ab312efe6ac9191.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / FAQ</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">Частые</span></span><span class="mask"><span class="ln" style="animation-delay:.2s">вопросы</span></span></h1>
+      <p class="lead fi" style="max-width:52ch;margin:26px 0 0;animation-delay:.45s">Не нашли ответ? Напишите менеджеру в Telegram, ответим в течение дня.</p>
+    </div></section>
+    <section class="sec"><div class="wrap" style="max-width:900px">
+      <sc-for list="{{ faq }}" as="q" hint-placeholder-count="12">
+        <div>
+          <sc-if value="{{ q.hasGroup }}" hint-placeholder-val="{{ false }}"><div class="lab" style="margin:56px 0 18px">{{ q.group }}</div></sc-if>
+          <div style="border-top:1px solid rgba(244,234,231,.16)">
+            <button onClick="{{ q.toggle }}" aria-expanded="{{ q.open }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left;padding:22px 0;min-height:64px;border:0;background:none;font-family:'Unbounded',sans-serif;font-weight:500;font-size:16px;line-height:1.35">
+              <span>{{ q.q }}</span>
+              <span style="flex:none;position:relative;width:22px;height:22px"><span style="position:absolute;left:3px;right:3px;top:10px;height:1.5px;background:#FF6F7B"></span><span style="position:absolute;left:3px;right:3px;top:10px;height:1.5px;background:#FF6F7B;transform:rotate({{ q.rot }});transition:transform .45s cubic-bezier(.22,1,.36,1)"></span></span>
+            </button>
+            <div style="display:grid;grid-template-rows:{{ q.rows }};transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1)"><div style="overflow:hidden;min-height:0"><p class="mut" style="margin:0;padding:0 0 24px;max-width:62ch">{{ q.a }}</p></div></div>
+          </div>
+        </div>
+      </sc-for>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== КОНТАКТЫ =================== -->
+  <sc-if value="{{ pg.contacts }}" hint-placeholder-val="{{ false }}">
+  <div class="pg">
+    <section class="ph"><img class="phimg" src="a/be54bd856a18f4dc89534f811276e3d7.jpg" alt="" loading="lazy"><div class="ring ring1" aria-hidden="true"></div><div class="wrap" style="position:relative">
+      <div class="crumb fi" style="animation-delay:.05s"><button class="lnk" onClick="{{ goHome }}">Главная</button> / Контакты</div>
+      <h1 class="h1"><span class="mask"><span class="ln" style="animation-delay:.1s">Контакты</span></span></h1>
+      <p class="lead fi" style="max-width:52ch;margin:26px 0 0;animation-delay:.4s">Быстрее всего отвечаем в Telegram. Если удобнее иначе, выберите любой способ связи.</p>
+    </div></section>
+    <section class="sec"><div class="wrap"><div class="grid3">
+      <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="5">
+        <div class="rv"><div class="pc cardp"><span class="mut" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase">{{ c.k }}</span><h3 class="h3" style="margin:12px 0 0;font-size:20px"><sc-if value="{{ c.href }}" hint-placeholder-val="{{ true }}"><a href="{{ c.href }}" target="_blank" rel="noopener" style="color:#FF6F7B;text-decoration:none">{{ c.v }}</a></sc-if><sc-if value="{{ c.plain }}" hint-placeholder-val="{{ false }}">{{ c.v }}</sc-if></h3><p class="mut" style="margin:10px 0 0;font-size:15px">{{ c.d }}</p></div></div>
+      </sc-for>
+    </div></div></section>
+    <section id="docs" class="sec alt anc"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 72px;align-items:flex-start">
+      <div class="rv" style="flex:1 1 340px;min-width:0">
+        <div class="lab">Документы</div>
+        <h2 class="h2" style="margin-bottom:22px">Реквизиты и документы</h2>
+        <p class="mut" style="margin:0">Здесь размещаются юридические данные продавца и тексты документов. Заполните перед запуском сайта.</p>
+      </div>
+      <div class="rv" style="flex:1 1 420px;min-width:0">
+        <sc-for list="{{ docs }}" as="t" hint-placeholder-count="6"><div class="li"><i></i><span>{{ t }}</span></div></sc-for>
+      </div>
+    </div></section>
+  </div>
+  </sc-if>
+
+  <!-- =================== ФОРМА ЗАЯВКИ (для выкупа, комиссии, консьержа, партнёров) =================== -->
+  <sc-if value="{{ formOn }}" hint-placeholder-val="{{ false }}">
+  <section id="form" class="sec alt anc" style="border-bottom:0">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:48px 72px;align-items:flex-start">
+      <div class="rv" style="flex:1 1 340px;min-width:0">
+        <div class="lab">Заявка</div>
+        <h2 class="h2" style="margin-bottom:22px">{{ form.title }}</h2>
+        <p class="mut" style="margin:0;max-width:38ch">{{ form.lead }}</p>
+      </div>
+      <div class="rv" style="flex:1 1 440px;min-width:0">
+        <div style="display:flex;flex-direction:column;gap:18px;padding:32px;border:1px solid rgba(244,234,231,.12);border-radius:22px;background:rgba(244,234,231,.02)">
+          <sc-for list="{{ form.fields }}" as="f" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="{{ f.id }}" class="mut" style="font-size:14px">{{ f.label }}</label>
+              <sc-if value="{{ f.area }}" hint-placeholder-val="{{ false }}"><textarea class="fld" id="{{ f.id }}" placeholder="{{ f.ph }}"></textarea></sc-if>
+              <sc-if value="{{ f.line }}" hint-placeholder-val="{{ true }}"><input class="fld" id="{{ f.id }}" type="{{ f.type }}" placeholder="{{ f.ph }}"></sc-if>
+            </div>
+          </sc-for>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <input id="fConsent" type="checkbox" style="width:20px;height:20px;margin:2px 0 0;accent-color:#C8283A;flex:none">
+            <label for="fConsent" class="mut" style="font-size:14px;line-height:1.5">Я даю согласие на <button class="lnk" onClick="{{ goDocs }}">обработку персональных данных</button> и принимаю политику конфиденциальности</label>
+          </div>
+          <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="font-size:14px;color:#FF6F7B">{{ err }}</div></sc-if>
+          <button class="btn" onClick="{{ sendForm }}" style="min-height:58px;padding:0 32px;color:#F4EAE7;--h:#1C1012;align-self:flex-start"><span>{{ form.btn }}</span><span class="arr" aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+  </main>
+
+  <footer style="background:#0C0607;color:#F4EAE7;padding:64px 0 48px">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 64px;justify-content:space-between">
+      <div style="max-width:34ch">
+        <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:22px;letter-spacing:.02em">Rsm Collection</div>
+        <p style="margin:14px 0 0;font-size:14px;color:rgba(244,234,231,.7)">Ресейл-платформа и онлайн-бутик люксовых сумок и аксессуаров.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px"><a class="btn" href="{{ hello }}" style="padding:12px 24px;font-size:12px;color:#F4EAE7;--h:#0C0607"><span>Написать в Telegram</span><span class="arr" aria-hidden="true">↗</span></a><a class="btn" href="{{ channelLink }}" target="_blank" rel="noopener" style="padding:12px 24px;font-size:12px;color:#F4EAE7;--h:#0C0607"><span>Наш канал</span><span class="arr" aria-hidden="true">↗</span></a></div>
+      </div>
+      <div style="display:flex;gap:56px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,234,231,.45);margin-bottom:4px">Покупателям</span>
+          <sc-for list="{{ ftA }}" as="l" hint-placeholder-count="5"><button class="fbtn" onClick="{{ l.go }}">{{ l.label }}</button></sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,234,231,.45);margin-bottom:4px">Продавцам</span>
+          <sc-for list="{{ ftB }}" as="l" hint-placeholder-count="4"><button class="fbtn" onClick="{{ l.go }}">{{ l.label }}</button></sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,234,231,.45);margin-bottom:4px">Компания</span>
+          <sc-for list="{{ ftC }}" as="l" hint-placeholder-count="4"><button class="fbtn" onClick="{{ l.go }}">{{ l.label }}</button></sc-for>
+        </div>
+      </div>
+    </div>
+    <div class="wrap" style="margin-top:44px;font-size:13px;color:rgba(244,234,231,.5)">© 2026 Rsm Collection</div>
+  </footer>
+</div>
+</template>
+<script src="runtime.js"></script>
+<script>
+
+class Component extends DCLogic {
+  renderVals() {
+    /* ---------- анимации прокрутки: плавное появление блоков и текста ---------- */
+    if (!window.__rsmFx) {
+      window.__rsmFx = true;
+      setTimeout(() => {
+        try {
+          const rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (rm || !("IntersectionObserver" in window)) return;
+          document.documentElement.classList.add("fx");
+          const EZ = "cubic-bezier(.22,1,.36,1)";
+          const reveal = (el, instant) => {
+            el.classList.add("in");
+            const kids = el.__split ? Array.prototype.slice.call(el.children) : [el];
+            const d0 = parseFloat(el.style.getPropertyValue("--d")) || 0;
+            kids.forEach((c, i) => {
+              if (!c.animate) return;
+              try {
+                c.animate([{ opacity: 0, transform: "translateY(64px) scale(.97)", filter: "blur(12px)" }, { opacity: 1, transform: "none", filter: "blur(0px)" }],
+                  { duration: instant ? 1 : 1250, delay: instant ? 0 : (el.__split ? i * 100 : d0 * 1000), easing: EZ, fill: "both" });
+              } catch (e) {}
+            });
+          };
+          const io = new IntersectionObserver((es) => es.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const el = e.target; io.unobserve(el);
+            const hold = Math.max(0, 3200 - performance.now());   /* ждём, пока уйдёт заставка */
+            if (hold > 0) setTimeout(() => reveal(el), hold); else reveal(el);
+          }), { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
+          const prep = (el) => {
+            if (el.__fx) return; el.__fx = 1;
+            const par = el.parentElement;
+            if (par && !el.style.getPropertyValue("--d")) {
+              const sib = Array.prototype.filter.call(par.children, (c) => c.classList.contains("rv"));
+              el.style.setProperty("--d", ((sib.indexOf(el) % 4) * 0.09) + "s");
+            }
+            if (el.querySelector(":scope > .lab, :scope > .h2, :scope > h2")) {
+              el.setAttribute("data-split", "1"); el.__split = 1;
+              Array.prototype.forEach.call(el.children, (c, i) => c.style.setProperty("--i", i));
+            }
+            const r = el.getBoundingClientRect();
+            if (r.top < innerHeight * 0.98 && r.bottom > 0 && window.scrollY >= 40) reveal(el, true);
+            else io.observe(el);
+          };
+          const scan = (n) => {
+            if (n.nodeType !== 1) return;
+            if (n.classList.contains("rv")) prep(n);
+            n.querySelectorAll && n.querySelectorAll(".rv").forEach(prep);
+          };
+          scan(document.body);
+          new MutationObserver((ms) => ms.forEach((m) => m.addedNodes.forEach(scan))).observe(document.body, { childList: true, subtree: true });
+          /* прокрутка → CSS-переменные (работает в любом контейнере прокрутки) */
+          document.documentElement.classList.add("sj");
+          const setSp = (y) => {
+            const h = innerHeight || 800;
+            const a = Math.min(1, Math.max(0, y / (h * 0.45)));
+            const b = Math.min(1, Math.max(0, y / (h * 0.72)));
+            const s = document.documentElement.style;
+            s.setProperty("--sp", (a * a).toFixed(4)); s.setProperty("--sp2", (b * b).toFixed(4));
+          };
+          addEventListener("scroll", (e) => {
+            const tg = e.target;
+            const y = (tg === document || tg === window || !tg || tg.nodeType === 9) ? (window.scrollY || document.documentElement.scrollTop || 0) : (tg.scrollTop || 0);
+            setSp(y);
+            document.documentElement.classList.toggle("scrolled", y > 140);
+          }, { passive: true, capture: true });
+          setSp(window.scrollY || 0);
+          /* лёгкий параллакс плавающих брендов за курсором */
+          if (matchMedia("(pointer:fine)").matches) {
+            let mx = 0, my = 0, cx = 0, cy = 0;
+            addEventListener("mousemove", (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; }, { passive: true });
+            const depth = [22, 34, 16, 28, 36, 20, 30];
+            (function loop() {
+              cx += (mx - cx) * 0.06; cy += (my - cy) * 0.06;
+              document.querySelectorAll(".chipf").forEach((ch, i) => { const d = depth[i % depth.length]; ch.style.translate = (cx * d) + "px " + (cy * d) + "px"; });
+              requestAnimationFrame(loop);
+            })();
+          }
+        } catch (err) { document.documentElement.classList.remove("fx"); }
+      }, 0);
+    }
+
+    const TG = "https://t.me/rsm_manager";
+    const CHANNEL = "https://t.me/Rsm_Collection";
+    const link = (t) => TG + "?text=" + encodeURIComponent(t);
+    const fmt = (n) => n == null ? "Цена по запросу" : n.toLocaleString("ru-RU") + " ₽";
+    const TONES = [["#C0463C","#5A1018"],["#A8764A","#3A2410"],["#8A8F9C","#262A33"],["#D8BFA8","#7A5640"]];
+
+    const IMG = (ids) => ids.map(i => "a/" + i + ".jpg");
+    const ALL = [
+      {id:1,  brand:"Louis Vuitton", name:"Speedy 30 Takashi Murakami, белая",  cat:"Сумки", price:72000, cond:"Отличное", size:"≈ 30 × 21 × 17 см", hero:true, badge:"Новинка",
+        photos:IMG(["f42d55418e858d4f4df768ab6a188bb8","9f8268226126bcd8701c4ff48704a14c","684a949639967a1a88cb2e03b990615e","3cd7419ae54ee603d0f72d4ca2dde9a2","65515163dc26951ebadeb962a64a3d76","38da27df115e6ba6d34c1bc02add4f3e"])},
+      {id:2,  brand:"Louis Vuitton", name:"Speedy 30 Takashi Murakami, чёрная", cat:"Сумки", price:null, cond:"Отличное", size:"≈ 30 × 21 × 17 см",
+        photos:IMG(["52b4809135c64aed79f7e28437ae68f8","f29d9e854a41872fe5ee80e23848162a","ba9405d5c3c28adf58525dd7127edde1","d85e816aab4860cd692aa0c544f32f40","c87274fad41f46f760a9cf0df03f566e","425a79185ad7c6754535c87cefd35a20"])},
+      {id:3,  brand:"Gucci",         name:"Дорожная сумка GG Supreme",          cat:"Сумки", price:null, cond:"Новая",    size:"≈ 50 × 30 × 25 см", badge:"Новая",
+        photos:IMG(["bb79f51e2887047436070bf6290e57e8","16dafee95e7ab4c1d44cb87d4404100f"])},
+      {id:4,  brand:"Louis Vuitton", name:"Keepall 45 Bandoulière Monogram",    cat:"Сумки", price:null, cond:"Отличное", size:"45 × 27 × 20 см",
+        photos:IMG(["e12243366369e398df09c8513a8095d8"])},
+      {id:5,  brand:"Louis Vuitton", name:"Keepall 55 Bandoulière Monogram",    cat:"Сумки", price:null, cond:"Отличное", size:"55 × 31 × 24 см",
+        photos:IMG(["d24350878d284d72a7e12a2c0ae9018d"])},
+      {id:6,  brand:"Louis Vuitton", name:"Petit Noé Monogram",                 cat:"Сумки", price:null, cond:"Отличное", size:"≈ 25 × 25 × 20 см",
+        photos:IMG(["d52874fc87fbb3030cab641e0761edb5","9afbcdc2efdd58abcd9c5fdca2e90fae","221739f21c1bd45cd5b47e7f264193d3","3d2a6d63b97f3b3f358c8ce6680c15a3","f659bd8d5a2792542188838e8e759bb0"])},
+      {id:7,  brand:"Louis Vuitton", name:"Neverfull MM Damier Ebène",          cat:"Сумки", price:null, cond:"Отличное", size:"≈ 31 × 28 × 14 см",
+        photos:IMG(["62f7a6c498397c0796b0bf0a57c23328","03583b0b37168bdb61e334b7d2ad1182"])},
+      {id:8,  brand:"Louis Vuitton", name:"Neverfull MM Monogram",              cat:"Сумки", price:null, cond:"Отличное", size:"≈ 31 × 28 × 14 см",
+        photos:IMG(["14f14b23c3d1ba99cd3cb9c3a416bba0","914e2d7877bc26779a66fe360b649e95"])},
+      {id:9,  brand:"Gucci",         name:"Jackie, чёрная замша",               cat:"Сумки", price:null, cond:"Отличное", size:"≈ 28 × 19 × 4,5 см",
+        photos:IMG(["f4924b81035d46529026e113487c980f"])},
+      {id:10, brand:"Christian Dior", name:"Trotter, мини-сумка на цепочке",    cat:"Сумки", price:null, cond:"Отличное", size:"≈ 20 × 10 × 5 см",
+        photos:IMG(["1d678f28ca1f662c77aa6272c702b048"])},
+      {id:11, brand:"Louis Vuitton", name:"Eva Damier Azur",                    cat:"Сумки", price:null, cond:"Отличное", size:"≈ 21 × 11 × 5 см",
+        photos:IMG(["4235eedc49995596c9d61c3a2a739b7a"])},
+      {id:12, brand:"Balenciaga",    name:"City, чёрная",                       cat:"Сумки", price:50000, cond:"Отличное", size:"≈ 32 × 25 см",
+        photos:IMG(["aa7786006c9ad5ef148f4d1ddc0a36a5"])}
+    ];
+
+    const ITEMS = ALL.filter(i => !i.sold);
+    const SOLD = ALL.filter(i => i.sold);
+
+    const BRANDS = ["Louis Vuitton","Gucci","Balenciaga","Hermès","Chanel","Dior","Bottega Veneta","Celine","Prada","Fendi","Saint Laurent","Loewe","Goyard","Valentino","Versace","Palm Angels"];
+
+    /* ---------- страницы ---------- */
+    const PAGES = [
+      ["home","Главная","Витрина и новые поступления"],
+      ["about","О нас","Кто мы и как работаем"],
+      ["delivery","Оплата и доставка","Сроки, способы, возврат"],
+      ["auth","Гарантия подлинности","Двухэтапная экспертиза"],
+      ["concierge","RSM Concierge","Подбор модели под запрос"],
+      ["buyout","Выкуп","Оценим и выплатим сразу"],
+      ["consign","Комиссия","Продадим вашу сумку"],
+      ["services","Услуги","Трейд-ин, уход, сертификаты"],
+      ["partners","Партнёрам","Сотрудничество и лояльность"],
+      ["faq","FAQ","Частые вопросы"],
+      ["contacts","Контакты","Связь и реквизиты"]
+    ];
+    const FORM_PAGES = {
+      buyout:"buyout", consign:"consign", concierge:"concierge", partners:"partners"
+    };
+    const FORMS = {
+      buyout:{ title:"Оценить вещь для выкупа", lead:"Расскажите о вещи и приложите ссылку на фото. Назовём предварительную цену, обычно в течение рабочего дня.", btn:"Отправить на оценку", subj:"Заявка на выкуп",
+        fields:[["name","Имя*","line","text",1,"Как к вам обращаться"],["contact","Telegram или телефон*","line","text",1,"@username или +7"],["item","Бренд и модель*","line","text",1,"Например, Louis Vuitton Speedy 30"],["price","Желаемая цена","line","text",0,"Если есть ожидания"],["state","Состояние и комплект","area","",0,"Дефекты, коробка, чек, пыльник"],["photo","Ссылка на фото","line","text",0,"Облако, Telegram, Google Диск"]] },
+      consign:{ title:"Сдать вещь на комиссию", lead:"Оставьте данные, и менеджер предложит цену и условия договора комиссии.", btn:"Отправить заявку", subj:"Заявка на комиссию",
+        fields:[["name","Имя*","line","text",1,"Как к вам обращаться"],["contact","Telegram или телефон*","line","text",1,"@username или +7"],["item","Бренд и модель*","line","text",1,"Например, Hermès Birkin 30"],["price","Желаемая цена","line","text",0,"За сколько хотите продать"],["state","Состояние и комплект","area","",0,"Дефекты, коробка, чек, пыльник"],["photo","Ссылка на фото","line","text",0,"Облако, Telegram, Google Диск"]] },
+      concierge:{ title:"Запрос на подбор модели", lead:"Опишите, что ищете, или приложите ссылку на фото. Подберём варианты и вернёмся с ценой.", btn:"Оставить запрос", subj:"Запрос в RSM Concierge",
+        fields:[["name","Имя*","line","text",1,"Как к вам обращаться"],["contact","Telegram или телефон*","line","text",1,"@username или +7"],["item","Что ищете*","area","",1,"Бренд, модель, цвет, материал, размер"],["price","Бюджет","line","text",0,"Ориентир по цене"],["photo","Ссылка на фото-пример","line","text",0,"Облако, Telegram, Google Диск"]] },
+      partners:{ title:"Заявка на сотрудничество", lead:"Заполните форму, и мы свяжемся с вами в ближайшее время.", btn:"Отправить заявку", subj:"Заявка партнёра",
+        fields:[["name","Имя*","line","text",1,""],["contact","Контактный телефон*","line","tel",1,""],["email","Электронная почта","line","email",0,""],["field","Сфера деятельности","line","text",0,"Стилист, фотограф, инфлюенсер, баер"],["link","Ссылка на профиль в социальных сетях","line","text",0,""],["info","Дополнительная информация","area","",0,""]] }
+    };
+
+    /* ---------- тексты ---------- */
+    const ABOUT_POINTS = ["Строгий многоступенчатый отбор каждого лота","Профессиональное оборудование и собственные базы данных","Помощь в поиске конкретной позиции под запрос","Бережная доставка по России и за её пределы"];
+    const PRINCIPLES = [
+      {n:"01", t:"Отбор", d:"Каждый лот проходит строгий многоступенчатый отбор, прежде чем попасть в каталог."},
+      {n:"02", t:"Экспертиза", d:"Оцениваем состояние, подлинность и инвестиционную ценность, сверяя данные с профессиональными базами."},
+      {n:"03", t:"Сопровождение", d:"Консультируем, подбираем под запрос и доставляем заказ в любой регион России и за её пределы."}
+    ];
+    const DELIVERY = [
+      {title:"Доставка по Москве", text:"Доступно оформление бесплатной экспресс-доставки «день в день» в удобный для вас временной интервал — мы доставим заказ нашим курьером, с возможностью примерки перед оплатой."},
+      {title:"Самовывоз", text:"Возможен по согласованию с менеджером, доступна примерка перед покупкой."},
+      {title:"Доставка по России", text:"Отправляем заказ любой курьерской службой по вашему выбору, доставка по России бесплатная."},
+      {title:"Международная доставка", text:"За пределы России мы отправляем заказы службой CDEK. Точные сроки и стоимость доставки можно уточнить у нашего менеджера."},
+      {title:"Оплата", text:"Оплатить заказ возможно любым удобным для вас способом: банковской картой на сайте, через СБП, либо наличными курьеру."},
+      {title:"Возврат", text:"Порядок возврата осуществляется в соответствии с законодательством РФ, а также с учётом особенностей, предусмотренных офертой. Отказ от покупки возможен при самовывозе либо примерке на территории Москвы."}
+    ];
+    const ORDER_STEPS = [
+      {n:"01", t:"Выбираете вещь", d:"Находите лот в каталоге и нажимаете «Написать менеджеру»."},
+      {n:"02", t:"Получаете детали", d:"Присылаем живые фото и видео, отвечаем на вопросы по состоянию и комплекту."},
+      {n:"03", t:"Согласуем оплату", d:"Выбираете удобный способ оплаты и способ получения заказа."},
+      {n:"04", t:"Получаете заказ", d:"Доставляем курьером или отправляем выбранной службой. В Москве возможна примерка."}
+    ];
+    const CHECKS = ["Фурнитура","Материалы","Штампы","Серийные коды","Швы","Комплектность","Подкладка","Запах и состояние кожи"];
+    const CONCIERGE = [
+      {n:"01", title:"С чего начать", text:"Для начала подбора необходимо отправить нам фотографию, либо подробное описание желаемого изделия. Наши эксперты подключают международную сеть проверенных партнёров, аукционные дома и частные коллекции."},
+      {n:"02", title:"Проверка и доставка", text:"Каждый найденный вариант проходит строгую двухэтапную проверку подлинности, оценку состояния и детальный обзор изделия. Затем мы согласуем с вами стоимость и организуем бережную доставку."},
+      {n:"03", title:"Сроки подбора", text:"Обычно подбор лота занимает один рабочий день, однако для редких и уникальных позиций срок может увеличиться — но мы всегда предупреждаем об этом заранее и держим вас в курсе на каждом этапе."}
+    ];
+
+    const BUY_STEPS = [
+      {n:"01", t:"Заявка", d:"Отправьте фото и описание вещи через форму или в Telegram: бренд, модель, состояние, комплект."},
+      {n:"02", t:"Предварительная оценка", d:"Менеджер назовёт ориентировочную цену, обычно в течение рабочего дня."},
+      {n:"03", t:"Экспертиза", d:"Проверяем подлинность и состояние. В Москве — на личной встрече, из других городов — по застрахованной отправке или по фото."},
+      {n:"04", t:"Итоговая цена и договор", d:"Называем окончательную сумму и оформляем договор купли-продажи. Если цена не подходит, вы забираете вещь без обязательств."},
+      {n:"05", t:"Выплата", d:"Переводим деньги сразу после приёмки вещи: на карту, по СБП или наличными при встрече."}
+    ];
+    const BUY_YES = ["Сумки и аксессуары люксовых брендов, включая лимитированные и архивные модели","Одежду и обувь премиальных брендов в хорошем состоянии","Вещи с коробкой, чеком и пыльником (комплект повышает цену, но не обязателен)","Редкие позиции и коллаборации, спрос на которые стабилен"];
+    const BUY_NO = ["Копии и реплики","Вещи, подлинность которых невозможно подтвердить","Изделия с серьёзными повреждениями: разрушенное покрытие, стойкий запах, сильный износ (редкие модели рассматриваем отдельно)"];
+    const PRICE_FACTORS = ["Модель и коллекция","Состояние и износ","Цвет и материал","Комплект","Текущий спрос"];
+    const PHOTO_LIST = ["Общий вид спереди, сзади и сбоку","Дно и углы изделия","Внутренняя часть и подкладка","Бирки, штампы и серийный номер","Фурнитура: молнии, замки, застёжки","Дефекты крупным планом, если они есть","Комплект: коробка, чек, пыльник, карточки"];
+    const COMPARE = [
+      {a:"Скорость", b:"Деньги сразу после проверки", c:"После продажи, срок зависит от спроса"},
+      {a:"Цена", b:"Ниже рыночной: мы берём вещь на себя", c:"Ближе к рыночной"},
+      {a:"Расходы", b:"Без комиссии", c:"Комиссия только при продаже"},
+      {a:"Риски", b:"Берём на себя", c:"Вещь ждёт покупателя"},
+      {a:"Подходит", b:"Когда нужны деньги быстро", c:"Когда важна максимальная выручка"}
+    ];
+    const BUY_FAQ = [
+      ["Как быстро я получу деньги?","Сразу после приёмки и проверки вещи. Если вы в Москве, это день встречи. Из других городов — после получения посылки и экспертизы."],
+      ["Нужен ли чек или коробка?","Нет, но комплект повышает цену. Если чека нет, подлинность подтвердим сами, при этом может потребоваться больше времени."],
+      ["Что, если мне не подходит предложенная цена?","Вы можете отказаться без обязательств и забрать вещь. Либо передать её на комиссию, чтобы продать ближе к рыночной цене."],
+      ["Можно ли обменять свою вещь на другую из каталога?","Да, мы оцениваем вашу вещь и засчитываем сумму в счёт покупки. Условия согласует менеджер."]
+    ];
+
+    const CONS_DO = [
+      {n:"01", t:"Оценка", d:"Эксперты определяют рыночную цену с учётом модели, состояния, цвета, комплекта и спроса."},
+      {n:"02", t:"Подготовка", d:"Проверяем подлинность и при необходимости делаем предпродажный уход."},
+      {n:"03", t:"Фото и видео", d:"Профессиональная съёмка, которая показывает вещь честно и выгодно."},
+      {n:"04", t:"Продвижение", d:"Размещаем лот в каталоге, Telegram и соцсетях, показываем целевой аудитории."},
+      {n:"05", t:"Безопасная сделка", d:"Общаемся с покупателями, показываем вещь и берём на себя оформление."}
+    ];
+    const CONS_STEPS = [
+      {n:"01", t:"Заявка", d:"Присылаете фото и описание вещи через форму или в Telegram."},
+      {n:"02", t:"Цена и договор", d:"Согласуем цену продажи и оформляем договор комиссии."},
+      {n:"03", t:"Передача вещи", d:"Курьер заберёт вещь в Москве, из других городов — отправка застрахованным отправлением."},
+      {n:"04", t:"Подготовка", d:"Проверяем подлинность, ухаживаем за вещью и снимаем фото и видео."},
+      {n:"05", t:"Продажа", d:"Размещаем лот, находим покупателя и сопровождаем сделку."},
+      {n:"06", t:"Выплата", d:"Переводим вам выручку за вычетом комиссии."}
+    ];
+    const TIERS = [{r:"до 50 000 ₽", p:"30%"},{r:"от 50 000 до 150 000 ₽", p:"25%"},{r:"от 150 000 ₽", p:"20%"}];
+    const TIER_NOTE = "Чем дороже вещь, тем ниже процент. Для постоянных клиентов и при сдаче нескольких лотов условия согласуем индивидуально.";
+    const PAYOUT = ["Безналичным переводом в течение 3 рабочих дней после продажи","Услуги оценки, фотосъёмки и продвижения бесплатны, комиссия удерживается только при успешной продаже","Если вещь не прошла проверку подлинности, вы забираете её обратно","Цену можно скорректировать по согласованию с менеджером"];
+    const CONS_FAQ = [
+      ["Кто назначает цену?","Цену предлагают наши эксперты исходя из рынка, но решение принимаете вы. Если хотите продать дороже, обсудим срок и стратегию."],
+      ["Что, если вещь не продалась?","Договор можно продлить, снизить цену по согласованию с менеджером либо забрать вещь обратно."],
+      ["Сколько ждать продажи?","Зависит от модели и цены. Востребованные позиции уходят за дни, редкие могут занять несколько недель."],
+      ["Как передать вещь?","В Москве заберёт курьер, из других городов — отправка застрахованным отправлением. Детали согласует менеджер."],
+      ["Кому принадлежит вещь, пока она у вас?","Вещь остаётся вашей до продажи. Пока она у нас, мы отвечаем за её сохранность. Условия фиксируем в договоре."]
+    ];
+
+    const SERVICES = [
+      {n:"01", t:"Трейд-ин", d:"Обменяйте свою вещь на позицию из каталога. Оцениваем её и засчитываем сумму в счёт покупки.", q:"Здравствуйте! Интересует трейд-ин."},
+      {n:"02", t:"Онлайн-аутентификация", d:"Проверим подлинность вещи, которую вы купили или собираетесь купить где-то ещё, по фото и описанию.", q:"Здравствуйте! Интересует онлайн-аутентификация."},
+      {n:"03", t:"Подарочные сертификаты", d:"Подарите возможность выбрать вещь самостоятельно. Номинал любой.", q:"Здравствуйте! Интересует подарочный сертификат."}
+    ];
+    const PARTNER_WHO = ["Стилисты","Фотографы","Инфлюенсеры","Баеры"];
+
+    const FAQS = [
+      ["Покупка","Как заказать?","Выберите вещь в каталоге и нажмите «Написать менеджеру». Пришлём живые фото, ответим на вопросы и согласуем оплату и доставку в чате."],
+      ["","Можно ли забронировать вещь?","Да, по согласованию с менеджером. Условия брони уточняйте в чате."],
+      ["","Можно ли примерить перед покупкой?","В Москве примерка доступна при доставке курьером и при самовывозе."],
+      ["Оплата и доставка","Какие способы оплаты доступны?","Банковская карта на сайте, СБП, а в Москве наличные курьеру."],
+      ["","Сколько стоит доставка?","По России доставка бесплатная. Для международных отправок сроки и стоимость уточняет менеджер."],
+      ["","Как быстро вы доставите заказ?","По Москве возможна экспресс-доставка «день в день». По России сроки зависят от выбранной службы."],
+      ["Подлинность","Как вы проверяете подлинность?","Каждый лот проходит двухэтапную экспертизу: профессиональный анализ фурнитуры, материалов, штампов и серийных кодов, затем личный осмотр экспертом."],
+      ["","Что будет, если вещь окажется неподлинной?","Если независимая сертифицированная экспертиза подтвердит неаутентичность, мы вернём 100% стоимости покупки."],
+      ["","Можно ли получить дополнительные фото и видео?","Да, пришлём дополнительные фото, видео или макросъёмку деталей по запросу."],
+      ["Продажа","Чем выкуп отличается от комиссии?","При выкупе мы покупаем вещь сами и сразу выплачиваем деньги, цена ниже рыночной. При комиссии продаём вещь через наш каталог, и вы получаете выручку за вычетом комиссии."],
+      ["","Как быстро я получу деньги за выкуп?","Сразу после приёмки и проверки вещи."],
+      ["","Какую комиссию вы берёте?","Размер зависит от стоимости вещи, подробности в разделе «Комиссия»."],
+      ["","Что, если вещь не продалась?","Договор можно продлить, снизить цену по согласованию с менеджером или забрать вещь обратно."],
+      ["Другое","Нужной модели нет в каталоге","Воспользуйтесь сервисом RSM Concierge: пришлите фото или описание, и мы подберём модель под ваш запрос."],
+      ["","Можно ли обменять свою вещь?","Да, через трейд-ин. Менеджер оценит вашу вещь и согласует условия обмена."]
+    ];
+
+    const CONTACTS = [
+      {k:"Telegram", v:"@rsm_manager", href:"https://t.me/rsm_manager", d:"Основной способ связи. Отвечаем в течение дня."},
+      {k:"Канал", v:"@Rsm_Collection", href:"https://t.me/Rsm_Collection", d:"Новые поступления, актуальные лоты и цены."},
+      {k:"Время работы", v:"Ежедневно 10:00–21:00", d:"По московскому времени."},
+      {k:"Адрес", v:"Москва", d:"Самовывоз и примерка по предварительной договорённости."}
+    ];
+    const DOCS = ["Продавец: [ФИО ИП или название организации]","ИНН / ОГРНИП: [указать]","Политика обработки персональных данных: [добавить]","Пользовательское соглашение: [добавить]","Публичная оферта: [добавить]","Файлы cookie: [добавить]"];
+
+    /* ---------- состояние ---------- */
+    const s = Object.assign({page:"home", menu:false, seen:false, acc:"", err:"", cat:"all", favs:[], open:null, shown:false, ph:0}, this.state);
+    const toggleFav = (id) => {
+      const cur = Object.assign({favs:[]}, this.state).favs;
+      this.setState({ favs: cur.includes(id) ? cur.filter(x => x !== id) : cur.concat(id) });
+    };
+    const scrollTo = (id, smooth) => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({behavior: smooth ? "smooth" : "auto", block:"start"});
+    };
+    const go = (page, anchor) => () => {
+      const changed = (this.state.page || "home") !== page;
+      this.setState({ page, menu:false, seen:true, shown:false, acc:"", err:"" });
+      setTimeout(() => {
+        if (changed) {
+          document.querySelectorAll(".fld").forEach(e => { e.value = ""; });
+          document.querySelectorAll("input[type=checkbox]").forEach(e => { e.checked = false; });
+        }
+        scrollTo(anchor || "pagetop", !!anchor && !changed);
+      }, 70);
+    };
+    const openItem = (id) => {
+      this.setState({ open:id, shown:true, ph:0 });
+      setTimeout(() => scrollTo("detail", true), 80);
+    };
+    const acc = (prefix, arr) => arr.map((f,k) => {
+      const key = prefix + k, o = s.acc === key;
+      return { q:f[0], a:f[1], open:o, rows:o?"1fr":"0fr", rot:o?"0deg":"90deg", toggle: () => this.setState({ acc: o ? "" : key }) };
+    });
+
+    /* ---------- каталог ---------- */
+    const chip = (key, label, n) => {
+      const on = s.cat === key;
+      return { label, n, on, bg: on ? "#C8283A" : "transparent", fg: on ? "#fff" : "#F4EAE7",
+               bd: on ? "#C8283A" : "rgba(244,234,231,.3)", pick: () => this.setState({ cat: key, shown:false }) };
+    };
+    const chips = [
+      chip("all","Все",ITEMS.length),
+      chip("Сумки","Сумки",ITEMS.filter(i=>i.cat==="Сумки").length),
+      chip("Одежда","Одежда",ITEMS.filter(i=>i.cat==="Одежда").length),
+      chip("fav","Избранное",s.favs.length)
+    ].filter(c => c.label !== "Одежда" || c.n > 0);
+    const list = ITEMS.filter(i => s.cat==="all" ? true : s.cat==="fav" ? s.favs.includes(i.id) : i.cat===s.cat);
+    const cards = list.map(i => {
+      const faved = s.favs.includes(i.id);
+      return { id:i.id, brand:i.brand, name:i.name, price:fmt(i.price), badge:i.badge || "", img:i.photos[0], alt:i.brand + " " + i.name,
+               faved, hf: faved ? "#FF6F7B" : "rgba(244,234,231,0)", hs: faved ? "#FF6F7B" : "#F4EAE7",
+               open: () => openItem(i.id), fav: () => toggleFav(i.id) };
+    });
+    const cur = ITEMS.find(i => i.id === s.open) || ITEMS[0];
+    const curFaved = s.favs.includes(cur.id);
+    const phi = Math.min(s.ph || 0, cur.photos.length - 1);
+    const detail = { brand:cur.brand, name:cur.name, price:fmt(cur.price), cond:cur.cond, size:cur.size,
+      main:cur.photos[phi], alt:cur.brand + " " + cur.name,
+      thumbs: cur.photos.length > 1 ? cur.photos.map((src,k) => ({ src, bd: k === phi ? "#FF6F7B" : "rgba(244,234,231,.15)", op: k === phi ? 1 : .6, pick: () => this.setState({ ph:k }) })) : [],
+      link: link("Здравствуйте! Интересует " + cur.brand + " " + cur.name + (cur.price != null ? " за " + fmt(cur.price) : "") + ". Она ещё в наличии?"),
+      favLabel: curFaved ? "В избранном" : "В избранное", fav: () => toggleFav(cur.id) };
+    const hero = ITEMS.find(i => i.hero) || ITEMS[0];
+    const empty = s.cat === "fav";
+
+    /* ---------- навигация ---------- */
+    const NAV = ["about","delivery","auth","concierge","buyout"];
+    const labelOf = (id) => (PAGES.find(p => p[0] === id) || [])[1];
+    const navItems = [{label:"Каталог", go:go("home","catalog"), u:0, op:.7}].concat(NAV.map(id => {
+      const on = s.page === id || (id === "buyout" && s.page === "consign");
+      return { label: id === "buyout" ? "Продать" : labelOf(id), go:go(id), u: on ? 1 : 0, op: on ? 1 : .7 };
+    }));
+    const menuItems = PAGES.map((p,k) => ({ n:String(k+1).padStart(2,"0"), label:p[1], go:go(p[0]), fg: s.page === p[0] ? "#FF6F7B" : "#F4EAE7" }));
+    const hubs = PAGES.filter(p => ["delivery","auth","concierge","buyout","consign","services"].includes(p[0]))
+      .map((p,k) => ({ n:String(k+1).padStart(2,"0"), t:p[1], d:p[2], go:go(p[0]) }));
+    const tab = (id, label) => { const on = s.page === id; return { label, go:go(id), bg: on ? "#C8283A" : "transparent", fg: on ? "#fff" : "#F4EAE7", bd: on ? "#C8283A" : "rgba(244,234,231,.3)" }; };
+
+    /* ---------- форма ---------- */
+    const formKey = FORM_PAGES[s.page];
+    const F = formKey ? FORMS[formKey] : null;
+    const form = F ? { title:F.title, lead:F.lead, btn:F.btn,
+      fields: F.fields.map(f => ({ id:"f_"+f[0], label:f[1], line:f[2]==="line", area:f[2]==="area", type:f[3], ph:f[5] })) } : { title:"", lead:"", btn:"", fields:[] };
+    const sendForm = () => {
+      if (!F) return;
+      const val = (k) => ((document.getElementById("f_"+k) || {}).value || "").trim();
+      for (const f of F.fields) {
+        if (f[4] && !val(f[0])) { this.setState({ err:"Заполните обязательные поля, они отмечены звёздочкой." }); return; }
+      }
+      if (!(document.getElementById("fConsent") || {}).checked) { this.setState({ err:"Нужно согласие на обработку персональных данных." }); return; }
+      this.setState({ err:"" });
+      const lines = F.fields.filter(f => val(f[0])).map(f => f[1].replace("*","") + ": " + val(f[0]));
+      window.open(link(F.subj + "\n" + lines.join("\n")), "_blank");
+    };
+
+    return {
+      pg: Object.fromEntries(PAGES.map(p => [p[0], s.page === p[0]])),
+      hd: s.seen ? {a:".05s", b:".15s", c:".3s", d:".4s"} : {a:"1.65s", b:"1.77s", c:"2.3s", d:"2.5s"},
+      goHome: go("home"), goDocs: go("contacts","docs"),
+      toCatalog: go("home","catalog"), toBuyout: go("buyout"), toConcierge: go("concierge"),
+      toForm: () => scrollTo("form", true),
+      navItems, menuItems, hubs,
+      menuRows: s.menu ? "1fr" : "0fr", menuOpen: s.menu, menuLabel: s.menu ? "Закрыть" : "Меню",
+      toggleMenu: () => this.setState({ menu: !s.menu }),
+      chips, cards, detail,
+      detailRows: s.shown ? "1fr" : "0fr", detailOpacity: s.shown ? 1 : 0,
+      closeDetail: () => this.setState({ shown:false }),
+      noCards: cards.length === 0,
+      emptyTitle: empty ? "В избранном пока пусто" : "Здесь ничего нет",
+      emptyText: empty ? "Нажмите на сердечко на карточке, и вещь появится здесь." : "Выберите другую категорию.",
+      favCount: s.favs.length, favScale: s.favs.length ? 1 : 0,
+      favOpen: () => { this.setState({ page:"home", cat:"fav", menu:false, seen:true, shown:false }); setTimeout(() => scrollTo("catalog", true), 80); },
+      tag: { brand:hero.brand, name:hero.name, price:fmt(hero.price) },
+      tagOpen: () => { this.setState({ page:"home", seen:true }); openItem(hero.id); },
+      brandsLoop: BRANDS.concat(BRANDS),
+      soldDisp: SOLD.length ? "block" : "none",
+      sold: SOLD.map(x => ({ brand:x.brand, name:x.name, img:x.photos[0],
+        link: link("Здравствуйте! Ищу похожую вещь: " + x.brand + " " + x.name + ".") })),
+
+      aboutPoints: ABOUT_POINTS, principles: PRINCIPLES,
+      delivery: DELIVERY, orderSteps: ORDER_STEPS, checks: CHECKS, concierge: CONCIERGE,
+      buySteps: BUY_STEPS, buyYes: BUY_YES, buyNo: BUY_NO, priceFactors: PRICE_FACTORS, photoList: PHOTO_LIST, compare: COMPARE,
+      buyFaq: acc("b", BUY_FAQ),
+      consDo: CONS_DO, consSteps: CONS_STEPS, tiers: TIERS, tierNote: TIER_NOTE, payoutList: PAYOUT, consFaq: acc("c", CONS_FAQ),
+      sellTabs: [tab("buyout","Выкуп"), tab("consign","Комиссия")],
+      services: SERVICES.map(x => ({ n:x.n, t:x.t, d:x.d, link: link(x.q) })),
+      partnerWho: PARTNER_WHO,
+      faq: acc("f", FAQS.map(f => [f[1], f[2]])).map((q,k) => Object.assign(q, { hasGroup: !!FAQS[k][0], group: FAQS[k][0] })),
+      contacts: CONTACTS.map(c => Object.assign({ plain: !c.href, href: c.href || "" }, c, { plain: !c.href })), docs: DOCS,
+
+      formOn: !!F, form, sendForm, err: s.err, hasErr: !!s.err,
+      ftA: [["Каталог","home","catalog"],["Оплата и доставка","delivery"],["Гарантия подлинности","auth"],["RSM Concierge","concierge"],["FAQ","faq"]].map(a => ({ label:a[0], go:go(a[1], a[2]) })),
+      ftB: [["Выкуп","buyout"],["Комиссия","consign"],["Услуги","services"],["Партнёрам","partners"]].map(a => ({ label:a[0], go:go(a[1]) })),
+      ftC: [["О нас","about"],["Контакты","contacts"],["Документы","contacts","docs"]].map(a => ({ label:a[0], go:go(a[1], a[2]) })),
+
+      photoLink: link("Здравствуйте! Хочу запросить дополнительные фото и видео вещи."),
+      channelLink: CHANNEL,
+      giftLink: link("Здравствуйте! Хочу заказать подарочный сертификат на покупку вещей."),
+      hello: link("Здравствуйте!")
+    };
+  }
+}
+
+try{var tg=window.Telegram&&Telegram.WebApp; if(tg){tg.ready();tg.expand();try{tg.setHeaderColor("#140B0C");tg.setBackgroundColor("#140B0C");}catch(e){}}}catch(e){}
+DCStart(Component);
+</script>
+</body>
+</html>
