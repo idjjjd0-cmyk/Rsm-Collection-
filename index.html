@@ -173,8 +173,8 @@ textarea.in{min-height:96px;resize:none}
         photos:IMG(["aa7786006c9ad5ef148f4d1ddc0a36a5"])}
     ];
 
-    const ITEMS = ALL.filter(i => !i.sold);
-    const SOLD = ALL.filter(i => i.sold);
+    let ITEMS = ALL.filter(i => !i.sold);
+    let SOLD = ALL.filter(i => i.sold);
 
     const BRANDS = ["Louis Vuitton","Gucci","Balenciaga","Hermès","Chanel","Dior","Bottega Veneta","Celine","Prada","Fendi","Saint Laurent","Loewe","Goyard","Valentino","Versace","Palm Angels"];
 
@@ -555,6 +555,25 @@ document.addEventListener("scroll", (e) => {
   ds.forEach((d, n) => d.classList.toggle("on", n === i));
 }, true);
 
+/* ---------- живой каталог (бот) ---------- */
+const CAT_API = "https://rsm-bot.idjjjd0.workers.dev/api/catalog";
+function applyCat(list) {
+  if (!Array.isArray(list) || !list.length) return false;
+  ALL.splice(0, ALL.length, ...list);
+  ITEMS = ALL.filter((i) => !i.sold); SOLD = ALL.filter((i) => i.sold);
+  S.stack = S.stack.filter((e) => e.v !== "product" || byId(e.id));
+  return true;
+}
+function loadCat() {
+  try {
+    const ac = new AbortController(), t = setTimeout(() => ac.abort(), 7000);
+    fetch(CAT_API, { signal: ac.signal }).then((r) => r.json()).then((l) => {
+      clearTimeout(t);
+      if (applyCat(l)) { store.set("rsm_cat", l); render(true); }
+    }).catch(() => {});
+  } catch (e) {}
+}
+
 /* ---------- запуск ---------- */
 (function init() {
   $("#tabs").innerHTML = '<div class="pill">' + [["catalog", "Каталог", I.cat], ["fav", "Избранное", I.heart.replace('width="22" height="22"', 'width="26" height="26"')], ["sell", "Продать", I.sell], ["info", "Инфо", I.info]].map((t) => '<button class="tab" data-tab="' + t[0] + '">' + t[2] + "<span>" + t[1] + "</span></button>").join("") + '</div><button class="srch" data-srch aria-label="Поиск">' + I.search + "</button>";
@@ -570,7 +589,9 @@ document.addEventListener("scroll", (e) => {
     const qp = new URLSearchParams(location.search), sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || "", want = qp.get("tab") || sp;
     if (["catalog", "fav", "sell", "info"].includes(want)) S.tab = want;
   } catch (e) {}
+  try { applyCat(store.get("rsm_cat", null)); } catch (e) {}
   render();
+  loadCat();
   try {
     if (tg && tg.CloudStorage) tg.CloudStorage.getItem("rsm", (err, v) => {
       if (err || !v) return;
