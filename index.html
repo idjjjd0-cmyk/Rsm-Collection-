@@ -580,7 +580,7 @@ let deepDone = false;
 function openDeep() {
   if (deepDone) return;
   try {
-    const qp = new URLSearchParams(location.search), id = +(qp.get("item") || 0);
+    const qp = new URLSearchParams(location.search), sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || "", sm = /^item_(\d+)$/.exec(sp), id = +(qp.get("item") || (sm && sm[1]) || 0);
     if (id && byId(id)) { deepDone = true; S.tab = "catalog"; push("product", id); }
   } catch (e) {}
 }
