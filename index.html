@@ -566,6 +566,10 @@ document.addEventListener("scroll", (e) => {
       tg.BackButton.onClick(() => back());
     }
   } catch (e) {}
+  try {
+    const qp = new URLSearchParams(location.search), sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || "", want = qp.get("tab") || sp;
+    if (["catalog", "fav", "sell", "info"].includes(want)) S.tab = want;
+  } catch (e) {}
   render();
   try {
     if (tg && tg.CloudStorage) tg.CloudStorage.getItem("rsm", (err, v) => {
