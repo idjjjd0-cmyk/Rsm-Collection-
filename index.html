@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#0B0A09"><title>RSM Collection</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* Noir Atelier: чёрный, золото, засечки. Красный — только для ошибок. */
 :root{--bg:#0B0A09;--s1:#141210;--s2:#1C1915;--line:#2B2620;--tx:#F2EDE4;--mu:#8F877A;--ac:#C9A35C;--ac2:#E3C98F;--on:#0B0A09;--ok:#9DBF7E;--bad:#E0655A;--hd:#0B0A09;--r:8px;
@@ -150,7 +150,23 @@ textarea.in{min-height:96px;resize:none}
 .vid{position:fixed;inset:0;z-index:70;background:#000;display:flex;align-items:center;justify-content:center;animation:fin .25s both}
 .vid video{width:100%;max-height:100%}
 .vid .x{position:absolute;top:calc(14px + env(safe-area-inset-top));right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:24px}
-#splash{position:fixed;inset:0;z-index:200;background:#0B0A09;transition:opacity .7s ease}#splash video{width:100%;height:100%;object-fit:cover;display:block}#splash.hide{opacity:0;pointer-events:none}
+/* заставка: буквы RSM проступают, золотая линия прорисовывается, затем Collection и подпись */
+#splash{position:fixed;inset:0;z-index:200;background:#0B0A09;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .7s ease-out;will-change:opacity}
+#splash.hide{opacity:0;pointer-events:none}
+.sp{position:relative;text-align:center;margin-top:-4vh}
+.sp-mono{font:600 76px/1 var(--serif);letter-spacing:.14em;margin-right:-.14em;color:var(--tx)}
+.sp-mono span{display:inline-block;opacity:0;transform:translate3d(0,14px,0);will-change:transform,opacity}
+#splash.go .sp-mono span{animation:spin 1s var(--ease) forwards;animation-delay:calc(.05s + var(--i) * .14s)}
+@keyframes spin{to{opacity:1;transform:translate3d(0,0,0)}}
+.sp-line{display:block;width:120px;height:1px;margin:18px auto 16px;background:linear-gradient(90deg,transparent,var(--ac),transparent);transform:scaleX(0);will-change:transform}
+#splash.go .sp-line{animation:spl 1s var(--ease) .65s forwards}
+@keyframes spl{to{transform:scaleX(1)}}
+.sp-col{font:600 italic 30px/1 var(--serif);color:var(--ac);letter-spacing:.04em;opacity:0;will-change:transform,opacity}
+#splash.go .sp-col{animation:spf 1s var(--ease) .95s forwards}
+.sp-tag{margin-top:16px;font:500 10.5px Inter;letter-spacing:.32em;text-transform:uppercase;color:var(--mu);opacity:0;will-change:transform,opacity}
+#splash.go .sp-tag{animation:spf 1s var(--ease) 1.25s forwards}
+#splash ~ #app .card,#splash ~ #app .view{animation:none}   /* пока идёт заставка, каталог под ней не анимируем — меньше нагрузка */
+@keyframes spf{from{opacity:0;transform:translate3d(0,8px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 /* ---------- отклик кнопок: нажатие, пружинка, блик на главной кнопке ---------- */
 .chip,.li,.sbar,.nav,.vbtn,.tab,.ph,.back,.cartrow img,.faq button,.sheet .cancel,.x{transition:transform .18s var(--ease),background-color .2s,border-color .2s,color .2s}
 .chip:active,.sbar:active,.back:active,.x:active{transform:scale(.95)}
@@ -184,7 +200,7 @@ textarea.in{min-height:96px;resize:none}
 .vbtn.try{left:auto;right:14px;background:rgba(11,10,9,.65);color:var(--ac2);border:1px solid rgba(201,163,92,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style></head>
-<body><div id="splash"><video id="splashV" poster="splash.jpg" autoplay muted playsinline webkit-playsinline preload="auto"><source src="splash.mp4" type="video/mp4"><source src="splash.webm" type="video/webm"></video></div><script>(function(){var s=document.getElementById('splash'),v=document.getElementById('splashV'),done=false;function close(){if(done)return;done=true;s.classList.add('hide');setTimeout(function(){s.remove()},700)}try{if(sessionStorage.getItem('splashSeen')){s.remove();return}sessionStorage.setItem('splashSeen','1')}catch(e){}v.addEventListener('timeupdate',function(){if(v.currentTime>4.5)close()});v.addEventListener('ended',close);v.addEventListener('error',close);var ls=v.querySelectorAll('source');ls[ls.length-1].addEventListener('error',close);s.addEventListener('click',close);setTimeout(close,6500);var p=v.play&&v.play();if(p&&p.catch)p.catch(function(){setTimeout(close,1200)})})();</script><div id="app"></div><nav class="tabs" id="tabs"></nav>
+<body><div id="splash" aria-label="RSM Collection"><div class="sp"><div class="sp-mono"><span style="--i:0">R</span><span style="--i:1">S</span><span style="--i:2">M</span></div><i class="sp-line"></i><div class="sp-col">Collection</div><div class="sp-tag">Онлайн-ресейл платформа</div></div></div><script>(function(){var s=document.getElementById('splash'),done=false;function close(){if(done)return;done=true;s.classList.add('hide');setTimeout(function(){s.remove()},800)}try{if(sessionStorage.getItem('splashSeen')){s.remove();return}sessionStorage.setItem('splashSeen','1')}catch(e){}var started=false;function go(){if(started)return;started=true;s.classList.add('go');setTimeout(close,matchMedia('(prefers-reduced-motion: reduce)').matches?500:2700)}try{document.fonts&&document.fonts.load('600 76px "Cormorant Garamond"').then(go,go)}catch(e){}setTimeout(go,700);s.addEventListener('click',close)})();</script><div id="app"></div><nav class="tabs" id="tabs"></nav>
 <script>
     const TG = "https://t.me/rsm_manager";
     const CHANNEL = "https://t.me/Rsm_Collection";
